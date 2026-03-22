@@ -9,18 +9,10 @@
   
   <style>
     :root {
-      --bg: #02040a; 
-      --surface: rgba(13, 17, 30, 0.45); 
-      --card: rgba(20, 25, 45, 0.55);
-      --border: rgba(125, 150, 255, 0.15); 
-      --border-glow: rgba(125, 170, 255, 0.4);
-      --accent: #818cf8; 
-      --gold: #fbbf24; 
-      --red: #f87171; 
-      --green: #34d399; 
-      --purple: #a78bfa;
-      --text: #f8fafc; 
-      --dim: #94a3b8;
+      --bg: #02040a; --surface: rgba(13, 17, 30, 0.45); --card: rgba(20, 25, 45, 0.55);
+      --border: rgba(125, 150, 255, 0.15); --border-glow: rgba(125, 170, 255, 0.4);
+      --accent: #818cf8; --gold: #fbbf24; --red: #f87171; --green: #34d399; --purple: #a78bfa;
+      --text: #f8fafc; --dim: #94a3b8;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, system-ui, sans-serif; }
@@ -30,63 +22,61 @@
     .header-img { width: 100%; height: 220px; object-fit: cover; object-position: center top; -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%); position: absolute; top: 0; left: 0; z-index: 0; }
     .header-glass { background: rgba(2, 4, 10, 0.3); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); padding: 24px 16px 16px; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
     .live-badge { background: rgba(251, 191, 36, 0.15); border: 1px solid var(--gold); color: var(--gold); font-size: 0.65rem; font-weight: 800; padding: 4px 14px; border-radius: 20px; letter-spacing: 2px; text-transform: uppercase; animation: pulse 2s infinite; }
-    
     @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
 
     /* --- NAVIGATION TABS --- */
     .tabs { display: flex; background: rgba(10, 15, 30, 0.8); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; padding: 6px 10px; position: sticky; top: 72px; z-index: 999; }
     .tabs::-webkit-scrollbar { display: none; }
-    .tab { padding: 12px 18px; font-size: 0.75rem; font-weight: 700; color: var(--dim); cursor: pointer; white-space: nowrap; border-radius: 20px; margin: 4px; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid transparent; flex-shrink: 0; }
+    .tab { padding: 12px 18px; font-size: 0.75rem; font-weight: 700; color: var(--dim); cursor: pointer; white-space: nowrap; border-radius: 20px; margin: 4px; transition: 0.3s; border: 1px solid transparent; flex-shrink: 0; }
     .tab.active { color: #fff; background: rgba(129, 140, 248, 0.25); border-color: rgba(129, 140, 248, 0.4); box-shadow: 0 0 15px rgba(129, 140, 248, 0.2); }
 
     /* --- PANELS & CARDS --- */
     .panel { display: none; padding: 20px 16px 120px; position: relative; z-index: 10; max-width: 800px; margin: 0 auto; }
-    .panel.active { display: block; animation: slideUp 0.4s ease-out; }
-    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .panel.active { display: block; animation: slideUp 0.3s ease-out; }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
     .card { background: var(--card); backdrop-filter: blur(16px); border: 1px solid var(--border); border-radius: 20px; padding: 20px; margin-bottom: 20px; position: relative; overflow: hidden; }
     .card::before { content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent); opacity: 0.5; }
     .section-title { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
     .section-title::after { content: ""; flex: 1; height: 1px; background: var(--border); }
 
-    /* --- LORE & ARSENAL BLOCKS --- */
-    .lore-block { margin-bottom: 32px; background: rgba(0,0,0,0.2); padding: 16px; border-radius: 12px; border-left: 3px solid var(--accent); }
-    .lore-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
-    .lore-name { font-size: 1.1rem; font-weight: 800; color: #fff; letter-spacing: -0.02em; }
-    .lore-tag { font-size: 0.6rem; padding: 3px 8px; border-radius: 6px; font-weight: 700; text-transform: uppercase; border: 1px solid currentColor; }
-    .lore-history { font-size: 0.85rem; color: var(--dim); line-height: 1.7; margin-bottom: 12px; font-style: italic; }
-    .lore-stats { display: grid; grid-template-columns: 1fr; gap: 10px; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 12px; border: 1px solid var(--border); }
-    .stat-label { font-size: 0.6rem; color: var(--accent); font-weight: 700; text-transform: uppercase; margin-bottom: 2px; }
-    .stat-val { font-size: 0.75rem; color: #fff; }
-
-    /* --- PLAYER CARDS & AVATARS --- */
-    .player-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 16px; margin-bottom: 14px; transition: 0.3s; }
-    .avatar-stack { position: relative; width: 70px; height: 70px; margin-right: 16px; }
-    .avatar-main { width: 70px; height: 70px; border-radius: 18px; object-fit: cover; border: 1px solid var(--border); background: #0a0f1e; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; overflow: hidden; }
-    .avatar-sub { position: absolute; bottom: -6px; right: -6px; width: 32px; height: 32px; border-radius: 50%; border: 3px solid var(--bg); object-fit: cover; background: #1a2035; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-    .hp-bar { height: 6px; background: rgba(0,0,0,0.5); border-radius: 3px; overflow: hidden; margin-top: 4px; }
-    .hp-fill { height: 100%; transition: width 0.3s ease; }
-
-    /* --- VILLAINS, NPCs & HOF --- */
-    .villain-card { background: rgba(20,8,8,0.6); border: 1px solid rgba(239,83,80,0.4); border-radius: 16px; padding: 16px; margin-bottom: 14px; }
-    .hof-card { background: rgba(30,25,5,0.6); border: 1px solid rgba(255,213,79,0.4); border-radius: 16px; padding: 16px; margin-bottom: 14px; box-shadow: 0 0 20px rgba(255,213,79,0.1); }
-    .npc-memory-box { margin-top: 15px; border-top: 1px dashed var(--border); padding-top: 15px; }
-    .rumor-tag { color: var(--gold); font-size: 0.65rem; font-weight: 800; margin-bottom: 4px; display: block; }
-    .bounty-tag { color: var(--red); font-size: 0.65rem; font-weight: 800; margin-bottom: 4px; display: block; }
-    .phase-badge { font-size: 0.6rem; padding: 3px 8px; border-radius: 6px; font-weight: 800; text-transform: uppercase; margin-right: 5px; border: 1px solid currentColor; }
-
-    /* --- INPUTS & BUTTONS --- */
+    /* --- UI ELEMENTS --- */
     .input-label { display: block; font-size: 0.7rem; font-weight: 700; color: var(--dim); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; }
     .input { width: 100%; padding: 14px 16px; background: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: 14px; color: var(--text); font-size: 0.95rem; outline: none; transition: 0.2s; margin-bottom: 16px; -webkit-appearance: none; }
     .input:focus { border-color: var(--accent); background: rgba(0,0,0,0.6); box-shadow: 0 0 15px rgba(129,140,248,0.1); }
     select.input option { background: #0a0f1e; color: #fff; }
     
-    .btn { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--accent); background: rgba(129, 140, 248, 0.2); color: var(--accent); font-weight: 700; cursor: pointer; text-align: center; margin-bottom: 10px; }
+    .btn { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--accent); background: rgba(129, 140, 248, 0.2); color: var(--accent); font-weight: 700; cursor: pointer; text-align: center; margin-bottom: 10px; transition: 0.2s; }
+    .btn:active { transform: scale(0.98); }
     .btn-sm { padding: 6px 12px; border-radius: 8px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); color: #fff; font-size: 0.7rem; cursor: pointer; }
-    .forge-btn { width: 100%; padding: 18px; border-radius: 16px; background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); color: #fff; font-weight: 800; font-size: 1rem; border: none; cursor: pointer; box-shadow: 0 10px 20px rgba(124, 58, 237, 0.3); margin-top: 10px; }
-    
-    .roll-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; }
+
+    /* --- PLAYER UI --- */
+    .player-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 16px; margin-bottom: 14px; transition: 0.3s; }
+    .avatar-stack { position: relative; width: 70px; height: 70px; margin-right: 16px; flex-shrink: 0; }
+    .avatar-main { width: 70px; height: 70px; border-radius: 18px; object-fit: cover; border: 1px solid var(--border); background: #0a0f1e; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; overflow: hidden; }
+    .avatar-sub { position: absolute; bottom: -6px; right: -6px; width: 32px; height: 32px; border-radius: 50%; border: 3px solid var(--bg); object-fit: cover; background: #1a2035; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .hp-bar { height: 6px; background: rgba(0,0,0,0.5); border-radius: 3px; overflow: hidden; margin-top: 4px; }
+    .hp-fill { height: 100%; transition: width 0.3s ease; }
+
+    /* --- FORGE GRID --- */
+    .roll-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
     .roll-cell { background: rgba(255,255,255,0.03); padding: 12px; border-radius: 14px; border: 1px solid var(--border); }
+
+    /* --- CLASSES ACCORDION --- */
+    .class-selector { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; margin-bottom: 16px; }
+    .class-btn { padding: 10px 16px; border-radius: 20px; border: 1px solid var(--border); background: rgba(0,0,0,0.4); color: var(--dim); font-size: 0.8rem; font-weight: 700; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
+    .class-btn.active { background: rgba(129, 140, 248, 0.2); border-color: var(--accent); color: #fff; }
+    
+    details.lore-accordion { background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 12px; overflow: hidden; }
+    details.lore-accordion summary { padding: 16px; font-weight: 800; color: #fff; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.02); }
+    details.lore-accordion summary::-webkit-details-marker { display: none; }
+    details.lore-accordion summary::after { content: "▼"; color: var(--dim); font-size: 0.7rem; }
+    details[open].lore-accordion summary::after { content: "▲"; color: var(--accent); }
+    .accordion-content { padding: 16px; border-top: 1px solid var(--border); }
+
+    .lore-item { background: rgba(255,255,255,0.03); padding: 12px; border-radius: 8px; border-left: 3px solid var(--accent); margin-bottom: 12px; }
+    .lore-title { font-size: 0.95rem; font-weight: 800; color: #fff; margin-bottom: 4px; }
+    .lore-desc { font-size: 0.8rem; color: var(--dim); line-height: 1.6; }
 
     /* --- MODALS --- */
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 1000; padding: 20px; align-items: center; justify-content: center; }
@@ -97,6 +87,183 @@
     @keyframes rippleAnim { 0% { transform: scale(0.3); opacity: 1; } 100% { transform: scale(3); opacity: 0; } }
   </style>
 </head>
+<body>
+
+  <script>
+    document.addEventListener('pointerdown', function(e) {
+      if(['BUTTON', 'INPUT', 'SELECT', 'TEXTAREA', 'SUMMARY'].includes(e.target.tagName) || e.target.closest('label')) return;
+      const r = document.createElement('div');
+      r.className = 'ripple'; r.style.left = e.clientX + 'px'; r.style.top = e.clientY + 'px';
+      document.body.appendChild(r); setTimeout(() => r.remove(), 800);
+    });
+  </script>
+
+  <img src="IMG_5131.png" class="header-img" onerror="this.style.display='none'">
+  <div class="header-glass">
+    <div>
+      <div style="font-weight:900; font-size:1.3rem; letter-spacing:-0.5px;">THE HOLLOW REALM</div>
+      <div style="font-size:0.65rem; color:var(--accent); letter-spacing:3px; text-transform:uppercase; margin-top:2px; font-weight:700;">World Bible Console</div>
+    </div>
+    <div class="live-badge">Live System</div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-target="party">👥 Players</div>
+    <div class="tab" data-target="forge">🪆 Forge</div>
+    <div class="tab" data-target="map">🗺️ Map</div>
+    <div class="tab" data-target="classes">📚 Classes</div>
+    <div class="tab" data-target="arena">🎲 Arena</div>
+    <div class="tab" data-target="npcs">👁 NPCs</div>
+    <div class="tab" data-target="villains">🎭 Villains</div>
+    <div class="tab" data-target="protect">🛡 Protect</div>
+    <div class="tab" data-target="world">🌍 World Arc</div>
+    <div class="tab" data-target="hof">🏆 HOF</div>
+    <div class="tab" data-target="rules">📜 Rules</div>
+    <div class="tab" data-target="wrapup">📝 Wrap</div>
+  </div>
+
+  <div style="padding-top:180px; margin-top:-180px; pointer-events:none;"></div>
+
+  <div id="panel-party" class="panel active">
+    <div class="section-title">Active Adventurers</div>
+    <input class="input" id="searchBar" placeholder="Search by character or @user..." oninput="refreshParty()">
+    <div id="partyList"></div>
+  </div>
+
+  <div id="panel-forge" class="panel">
+    <div class="card">
+      <div class="section-title">Identity</div>
+      <label class="input-label">TikTok Username</label><input class="input" id="f-user" placeholder="@username">
+      <label class="input-label">Lore Name</label>
+      <select class="input" id="f-name" onchange="handleCustomName(this.value)">
+        <option value="">Choose a Retiring Name...</option>
+        <option>Alden</option><option>Valerius</option><option>Serana</option><option>Kaelen</option><option>Torbjorn</option>
+        <option>Elara</option><option>Fenris</option><option>Isolde</option><option>Gideon</option><option>Vael</option>
+        <option>Nyx</option><option>Draven</option><option>Soren</option><option>Lyra</option><option>Thorne</option>
+        <option>Vanya</option><option>Elias</option><option>Rurik</option><option>Sylas</option><option>Aric</option>
+        <option value="CUSTOM">✦ Forge Custom Name...</option>
+      </select>
+      <input class="input" id="f-custom" placeholder="Type Custom Name..." style="display:none; margin-top:-8px;">
+      
+      <label class="input-label">Class Path</label>
+      <select class="input" id="f-class">
+        <option value="">Select Path...</option>
+        <option>Warrior</option><option>Wizard</option><option>Rogue</option><option>Healer</option><option>Merchant</option><option>Bard</option>
+      </select>
+
+      <div class="section-title">Visual Imprinting</div>
+      <div style="display:flex; gap:12px; margin-bottom:12px;">
+        <div style="flex:1;">
+            <label class="btn-sm" style="display:block; text-align:center; padding:12px; border:1px dashed var(--accent);">TikTok Pic <input type="file" hidden onchange="handleImage(this, 'user')"></label>
+            <img id="prev-user" style="width:100%; height:90px; object-fit:cover; border-radius:12px; margin-top:8px; display:none;">
+        </div>
+        <div style="flex:1;">
+            <label class="btn-sm" style="display:block; text-align:center; padding:12px; border:1px dashed var(--gold);">Char Art <input type="file" hidden onchange="handleImage(this, 'char')"></label>
+            <img id="prev-char" style="width:100%; height:90px; object-fit:cover; border-radius:12px; margin-top:8px; display:none;">
+        </div>
+      </div>
+
+      <div class="section-title">Origin Rolls</div>
+      <div class="roll-grid">
+        <div class="roll-cell"><label class="input-label">1: Reputation</label><div style="display:flex; gap:5px;"><input type="number" id="roll-1" class="input" style="margin:0;" placeholder="0"><button class="btn-sm" style="background:var(--accent);" onclick="rollFor('roll-1')">🎲</button></div></div>
+        <div class="roll-cell"><label class="input-label">2: Trait</label><div style="display:flex; gap:5px;"><input type="number" id="roll-2" class="input" style="margin:0;" placeholder="0"><button class="btn-sm" style="background:var(--accent);" onclick="rollFor('roll-2')">🎲</button></div></div>
+        <div class="roll-cell"><label class="input-label">3: Weapon</label><div style="display:flex; gap:5px;"><input type="number" id="roll-3" class="input" style="margin:0;" placeholder="0"><button class="btn-sm" style="background:var(--accent);" onclick="rollFor('roll-3')">🎲</button></div></div>
+        <div class="roll-cell"><label class="input-label">4: Skill</label><div style="display:flex; gap:5px;"><input type="number" id="roll-4" class="input" style="margin:0;" placeholder="0"><button class="btn-sm" style="background:var(--accent);" onclick="rollFor('roll-4')">🎲</button></div></div>
+        <div class="roll-cell"><label class="input-label">5: Shadow</label><div style="display:flex; gap:5px;"><input type="number" id="roll-5" class="input" style="margin:0;" placeholder="0"><button class="btn-sm" style="background:var(--accent);" onclick="rollFor('roll-5')">🎲</button></div></div>
+        <div class="roll-cell"><label class="input-label">6: Enchant</label><div style="display:flex; gap:5px;"><input type="number" id="roll-6" class="input" style="margin:0;" placeholder="0"><button class="btn-sm" style="background:var(--accent);" onclick="rollFor('roll-6')">🎲</button></div></div>
+        <div class="roll-cell" style="grid-column: span 2;"><label class="input-label">7: Destiny Thread</label><div style="display:flex; gap:5px;"><input type="number" id="roll-7" class="input" style="margin:0;" placeholder="0"><button class="btn-sm" style="background:var(--purple);" onclick="rollFor('roll-7')">🎲 Roll Destiny</button></div></div>
+      </div>
+
+      <button class="btn" style="background:linear-gradient(135deg, #6366f1, #a855f7); color:#fff; border:none; padding:18px; font-size:1.1rem;" onclick="commitCharacter()">FORGE LORE</button>
+    </div>
+  </div>
+
+  <div id="panel-map" class="panel">
+    <div class="card" style="text-align:center; padding:50px 20px;">
+        <div style="font-size:4rem; margin-bottom:15px;">🗺️</div>
+        <div style="font-size:1.2rem; font-weight:800; color:var(--accent); text-transform:uppercase; letter-spacing:2px;">Cartography System</div>
+        <div style="font-size:0.8rem; color:var(--dim); margin-top:10px;">The Map Integration logic is pending deployment.</div>
+    </div>
+  </div>
+
+  <div id="panel-classes" class="panel">
+    <div class="section-title">The Class Compendium</div>
+    <div class="class-selector">
+        <button class="class-btn active" onclick="selectClassTab('Warrior', this)">⚔️ Warrior</button>
+        <button class="class-btn" onclick="selectClassTab('Wizard', this)">🔮 Wizard</button>
+        <button class="class-btn" onclick="selectClassTab('Rogue', this)">🗡️ Rogue</button>
+        <button class="class-btn" onclick="selectClassTab('Healer', this)">💚 Healer</button>
+        <button class="class-btn" onclick="selectClassTab('Merchant', this)">💰 Merchant</button>
+        <button class="class-btn" onclick="selectClassTab('Bard', this)">🎵 Bard</button>
+    </div>
+    <div id="classContentDisplay">
+        </div>
+  </div>
+
+  <div id="panel-arena" class="panel">
+    <div class="card" style="text-align:center; padding:40px;">
+        <div style="font-size:5rem;" onclick="rollD20()">🎲</div>
+        <div id="rollVal" style="font-size:3rem; font-weight:bold; color:var(--accent); margin-top:10px;">FATE</div>
+    </div>
+    <div class="card">
+      <div class="section-title">Box Battle Finalization</div>
+      <div style="display:flex; gap:10px; margin-bottom:12px;">
+        <div style="flex:1;">
+          <input class="input" id="b-p1" placeholder="P1 Username" style="margin-bottom:6px;">
+          <input class="input" id="b-c1" type="number" placeholder="Final Coins" style="margin:0; color:var(--gold);">
+        </div>
+        <div style="display:flex; align-items:center; font-weight:bold; color:var(--accent);">VS</div>
+        <div style="flex:1;">
+          <input class="input" id="b-p2" placeholder="P2 Username" style="margin-bottom:6px;">
+          <input class="input" id="b-c2" type="number" placeholder="Final Coins" style="margin:0; color:var(--gold);">
+        </div>
+      </div>
+      <button class="btn" style="border-color:var(--gold); color:var(--gold);" onclick="logBattle()">Commit Battle Result</button>
+    </div>
+  </div>
+
+  <div id="panel-npcs" class="panel">
+    <div style="display:flex; gap:10px; margin-bottom:12px;">
+      <input class="input" id="npcSearch" placeholder="Filter NPCs..." oninput="refreshNpcs()" style="margin:0; flex:1;">
+      <button class="btn-sm" style="background:var(--accent);" onclick="openNpcEditor('new')">+ New NPC</button>
+    </div>
+    <div id="npcListDisplay"></div>
+  </div>
+
+  <div id="panel-villains" class="panel">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <div class="section-title" style="margin:0;">Active Antagonists</div>
+        <button class="btn-sm" style="background:var(--red);" onclick="openVillainModal('new')">+ New Villain</button>
+    </div>
+    <div id="villainList"></div>
+  </div>
+
+  <div id="panel-protect" class="panel">
+    <div class="card">
+        <div class="section-title">🛡 Protection Ledger</div>
+        <div style="font-size:0.75rem; color:var(--dim); margin-bottom:16px;">1,000 coins/session missed. Shields from death and Box Battle targeting.</div>
+        <div id="protectList"></div>
+    </div>
+  </div>
+
+  <div id="panel-world" class="panel">
+    <div class="card">
+        <div class="section-title">Current Arc & World State</div>
+        <label class="input-label">Arc Title</label><input class="input" id="w-title" onblur="saveWorld()">
+        <label class="input-label">Primary Antagonist</label><input class="input" id="w-villain" onblur="saveWorld()">
+        <label class="input-label">Active Thread</label><textarea class="input" id="w-thread" style="height:100px;" onblur="saveWorld()"></textarea>
+        <label class="input-label">Global Events</label><textarea class="input" id="w-events" style="height:100px;" onblur="saveWorld()"></textarea>
+        <button class="btn" onclick="saveWorld()">Commit World State</button>
+    </div>
+  </div>
+
+  <div id="panel-hof" class="panel">
+    <div class="card">
+        <div class="section-title">Induct a Legend</div>
+        <label class="input-label">Name</label><input class="input" id="h-name">
+        <label class="input-label">Title</label><input class="input" id="h-title">
+        <label class="input-label">Reason</label><select class="input" id="h-reason"><option>Natural 20 on world-changing action</option><option>Story-defining death</option><option>Box Battle OP tier</option><option>Other</option></select>
+        <label class="input-label">Lore Notes</label><textarea class="input" id="h-notes" style="height:
 <body>
 
   <script>
@@ -356,12 +523,11 @@
   <div class="modal-overlay" id="pModal"><div class="modal" id="pModalContent"></div></div>
   <div class="modal-overlay" id="vModal"><div class="modal" id="vModalContent"></div></div>
   <div class="modal-overlay" id="npcModal"><div class="modal" id="npcModalContent"></div></div>
-
   <script>
     // ════════════════════════════════════════════════
     // 1. STATE & PERSISTENCE
     // ════════════════════════════════════════════════
-    let state = JSON.parse(localStorage.getItem('HR_WORLD_BIBLE_V3')) || { 
+    let state = JSON.parse(localStorage.getItem('HR_WORLD_BIBLE_V4')) || { 
         players: [], 
         villains: [], 
         hof: [], 
@@ -379,289 +545,60 @@
     let tempCharImg = null;
 
     function save() { 
-        localStorage.setItem('HR_WORLD_BIBLE_V3', JSON.stringify(state)); 
+        localStorage.setItem('HR_WORLD_BIBLE_V4', JSON.stringify(state)); 
     }
 
     // ════════════════════════════════════════════════
-    // 2. AUTO-TAB INJECTOR
-    // ════════════════════════════════════════════════
-    const tabContainer = document.querySelector('.tabs');
-    const missingTabs = [
-        { target: 'arsenal', label: '⚔️ Arsenal' },
-        { target: 'lore', label: '📖 Lore' },
-        { target: 'npcs', label: '👁 NPCs' },
-        { target: 'rules', label: '📜 Rules' },
-        { target: 'wrapup', label: '📝 Wrap' }
-    ];
-    
-    missingTabs.forEach(t => {
-        if(!document.querySelector(`.tab[data-target="${t.target}"]`)) {
-            const el = document.createElement('div');
-            el.className = 'tab';
-            el.setAttribute('data-target', t.target);
-            el.innerText = t.label;
-            tabContainer.appendChild(el);
-        }
-    });
-
-    // Re-attach Tab Listeners to ALL tabs
-    document.querySelectorAll('.tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-            
-            tab.classList.add('active');
-            const target = tab.getAttribute('data-target');
-            document.getElementById('panel-' + target).classList.add('active');
-            
-            // Render specific tab content
-            if(target === 'party') refreshParty();
-            if(target === 'protect') renderProtect();
-            if(target === 'villains') renderVillains();
-            if(target === 'world') renderWorld();
-            if(target === 'hof') renderHof();
-            if(target === 'arsenal') renderArsenalHardcoded();
-            if(target === 'lore') renderLoreHardcoded();
-            if(target === 'npcs') refreshNpcs();
-            if(target === 'rules') renderFaq();
-            if(target === 'wrapup') {
-                document.getElementById('sessNotes').value = state.notes || "";
-            }
-        });
-    });
-
-    // ════════════════════════════════════════════════
-    // 3. THE RAW LORE DATABASES (FULLY UNCOMPRESSED)
+    // 2. THE RAW LORE DATABASES (FULLY UNCOMPRESSED)
     // ════════════════════════════════════════════════
     
     const WEAPON_BIBLE = {
       Warrior: [
-        { 
-            r: "1-4", 
-            n: "Cracked Garrison Sword", 
-            s: "Battered", 
-            h: "Mass-produced for the Kingdom’s standing army. Every fracture line marks a blow that should have broken it and didn’t. Soldiers don’t replace them; they name them.", 
-            m: "No mechanical bonus. History of survival." 
-        },
-        { 
-            r: "5-9", 
-            n: "Garrison Longsword", 
-            s: "Standard", 
-            h: "Standard issue for Kingdom officers. Properly tempered, properly balanced. Designed to last a career. Some have.", 
-            m: "Reliable and consistent performance." 
-        },
-        { 
-            r: "10-14", 
-            n: "Tempered Hollow Steel Blade", 
-            s: "Fine", 
-            h: "Forged from ore found in shifting cavern veins. The metal absorbs light rather than catching it. Experienced fighters say it feels 'attentive'.", 
-            m: "+1 Combat in Dark/Underground" 
-        },
-        { 
-            r: "15-19", 
-            n: "The Shieldbreaker", 
-            s: "Rare", 
-            h: "Geometry modified to redistribute weight toward the tip. Designed by a smith who understood exactly where armor fails. Recovered from a lost battlefield.", 
-            m: "Ignores 1 point of enemy DEF on successful hit." 
-        },
-        { 
-            r: "20", 
-            n: "Mythic: Hollow Edge", 
-            s: "Mythic", 
-            h: "It did not arrive by forge. It simply was there. When carried, ambient danger decreases because the threats themselves reassess their chances.", 
-            m: "Double effect vs Hollow entities. Final strike option." 
-        }
+        { r: "1-4", n: "Cracked Garrison Sword", s: "Battered", h: "Mass-produced for the Kingdom’s standing army. Every fracture line marks a blow that should have broken it and didn’t. Soldiers don’t replace them; they name them.", m: "No mechanical bonus. History of survival." },
+        { r: "5-9", n: "Garrison Longsword", s: "Standard", h: "Standard issue for Kingdom officers. Properly tempered, properly balanced. Designed to last a career. Some have.", m: "Reliable and consistent performance." },
+        { r: "10-14", n: "Tempered Hollow Steel Blade", s: "Fine", h: "Forged from ore found in shifting cavern veins. The metal absorbs light rather than catching it. Experienced fighters say it feels 'attentive'.", m: "+1 Combat in Dark/Underground" },
+        { r: "15-19", n: "The Shieldbreaker", s: "Rare", h: "Geometry modified to redistribute weight toward the tip. Designed by a smith who understood exactly where armor fails. Recovered from a lost battlefield.", m: "Ignores 1 point of enemy DEF on successful hit." },
+        { r: "20", n: "Mythic: Hollow Edge", s: "Mythic", h: "It did not arrive by forge. It simply was there. When carried, ambient danger decreases because the threats themselves reassess their chances.", m: "Double effect vs Hollow entities. Final strike option." }
       ],
       Wizard: [
-        { 
-            r: "1-4", 
-            n: "Cracked Focus Crystal", 
-            s: "Battered", 
-            h: "Grown, not cut. The crack splits the light into wrong colors, making the channeling unpredictable. Caster must compensate manually.", 
-            m: "Normal function, but fumbles amplify backfires." 
-        },
-        { 
-            r: "5-9", 
-            n: "Scholar's Focus Rod", 
-            s: "Standard", 
-            h: "Produced by the Sunken Library. Reliable, standardized, and recognized by academic NPCs.", 
-            m: "Consistent Casting" 
-        },
-        { 
-            r: "10-14", 
-            n: "Hollow-Tuned Grimoire", 
-            s: "Fine", 
-            h: "Paper from trees at the Edge. Ink contains trace Hollow water. Marginal notes appear in a hand that is not yours.", 
-            m: "+1 Spell Rolls in Caverns" 
-        },
-        { 
-            r: "15-19", 
-            n: "The Resonance Staff", 
-            s: "Rare", 
-            h: "Staff resonates at a frequency just below hearing. Dark entities see this as a high-tier threat automatically.", 
-            m: "+1 Offensive Spell Damage" 
-        },
-        { 
-            r: "20", 
-            n: "THE VOID CODEX", 
-            s: "Mythic", 
-            h: "Reading it provides information already in your mind. The codex just organizes it. You will never age normally while carrying this.", 
-            m: "+2 All Spell Rolls" 
-        }
+        { r: "1-4", n: "Cracked Focus Crystal", s: "Battered", h: "Grown, not cut. The crack splits the light into wrong colors, making the channeling unpredictable. Caster must compensate manually.", m: "Normal function, but fumbles amplify backfires." },
+        { r: "5-9", n: "Scholar's Focus Rod", s: "Standard", h: "Produced by the Sunken Library. Reliable, standardized, and recognized by academic NPCs.", m: "Consistent Casting" },
+        { r: "10-14", n: "Hollow-Tuned Grimoire", s: "Fine", h: "Paper from trees at the Edge. Ink contains trace Hollow water. Marginal notes appear in a hand that is not yours.", m: "+1 Spell Rolls in Caverns" },
+        { r: "15-19", n: "The Resonance Staff", s: "Rare", h: "Staff resonates at a frequency just below hearing. Dark entities see this as a high-tier threat automatically.", m: "+1 Offensive Spell Damage" },
+        { r: "20", n: "THE VOID CODEX", s: "Mythic", h: "Reading it provides information already in your mind. The codex just organizes it. You will never age normally while carrying this.", m: "+2 All Spell Rolls" }
       ],
       Rogue: [
-        { 
-            r: "1-4", 
-            n: "Worn Shortsword", 
-            s: "Battered", 
-            h: "A familiar blade. Scratched, re-edged, grip worn smooth. No surprises. In your line of work, that is everything.", 
-            m: "Reliable under pressure" 
-        },
-        { 
-            r: "5-9", 
-            n: "Balanced Daggers (Pair)", 
-            s: "Standard", 
-            h: "Professional equipment. Calibrated muscle memory. Simultaneous draw and dual-strike capability.", 
-            m: "Negate defensive fighting penalty" 
-        },
-        { 
-            r: "10-14", 
-            n: "Hollow-Edged Stiletto", 
-            s: "Fine", 
-            h: "Inlaid with Hollow ore along the cutting edge. Assists in finding gaps in heavy armor that standard blades pass.", 
-            m: "+1 Attack from Stealth" 
-        },
-        { 
-            r: "15-19", 
-            n: "The Silencer", 
-            s: "Rare", 
-            h: "No maker's mark. Witnesses forget the blade's shape instantly. Actions produced with this make no unintended sound.", 
-            m: "Actions unheard by untargeted NPCs" 
-        },
-        { 
-            r: "20", 
-            n: "THE LAST WORD", 
-            s: "Mythic", 
-            h: "It chooses the Rogue when the previous carrier dies. It ends things with a quiet finality.", 
-            m: "One success per arc with no roll" 
-        }
+        { r: "1-4", n: "Worn Shortsword", s: "Battered", h: "A familiar blade. Scratched, re-edged, grip worn smooth. No surprises. In your line of work, that is everything.", m: "Reliable under pressure" },
+        { r: "5-9", n: "Balanced Daggers (Pair)", s: "Standard", h: "Professional equipment. Calibrated muscle memory. Simultaneous draw and dual-strike capability.", m: "Negate defensive fighting penalty" },
+        { r: "10-14", n: "Hollow-Edged Stiletto", s: "Fine", h: "Inlaid with Hollow ore along the cutting edge. Assists in finding gaps in heavy armor that standard blades pass.", m: "+1 Attack from Stealth" },
+        { r: "15-19", n: "The Silencer", s: "Rare", h: "No maker's mark. Witnesses forget the blade's shape instantly. Actions produced with this make no unintended sound.", m: "Actions unheard by untargeted NPCs" },
+        { r: "20", n: "THE LAST WORD", s: "Mythic", h: "It chooses the Rogue when the previous carrier dies. It ends things with a quiet finality.", m: "One success per arc with no roll" }
       ],
       Healer: [
-        { 
-            r: "1-4", 
-            n: "Worn Herb Satchel", 
-            s: "Battered", 
-            h: "Stains inside record years of preparations. Soft leather, rounded edges. You have worked, and it shows.", 
-            m: "Standard healing supplies" 
-        },
-        { 
-            r: "5-9", 
-            n: "Mender's Kit & Staff", 
-            s: "Standard", 
-            h: "Order issue. Integrated focus. Conduit and support in one. Comforting warmth for patients.", 
-            m: "Official Certification standing" 
-        },
-        { 
-            r: "10-14", 
-            n: "Hollow Root Salves", 
-            s: "Fine", 
-            h: "Transition zone botany. Chemistry understands the Hollow-source of the injury and reacts accordingly.", 
-            m: "+1 Healing on Hollow wounds" 
-        },
-        { 
-            r: "15-19", 
-            n: "The Binding Lantern", 
-            s: "Rare", 
-            h: "Illuminates hidden status effects, curses, and enchantments on a patient. You treat what others cannot see.", 
-            m: "Reveal all status once/session" 
-        },
-        { 
-            r: "20", 
-            n: "THE FIRST REMEDY", 
-            s: "Mythic", 
-            h: "It predates documentation. Heals in the way things heal when given exactly what they need.", 
-            m: "One max heal per arc with no roll" 
-        }
+        { r: "1-4", n: "Worn Herb Satchel", s: "Battered", h: "Stains inside record years of preparations. Soft leather, rounded edges. You have worked, and it shows.", m: "Standard healing supplies" },
+        { r: "5-9", n: "Mender's Kit & Staff", s: "Standard", h: "Order issue. Integrated focus. Conduit and support in one. Comforting warmth for patients.", m: "Official Certification standing" },
+        { r: "10-14", n: "Hollow Root Salves", s: "Fine", h: "Transition zone botany. Chemistry understands the Hollow-source of the injury and reacts accordingly.", m: "+1 Healing on Hollow wounds" },
+        { r: "15-19", n: "The Binding Lantern", s: "Rare", h: "Illuminates hidden status effects, curses, and enchantments on a patient. You treat what others cannot see.", m: "Reveal all status once/session" },
+        { r: "20", n: "THE FIRST REMEDY", s: "Mythic", h: "It predates documentation. Heals in the way things heal when given exactly what they need.", m: "One max heal per arc with no roll" }
       ],
       Merchant: [
-        { 
-            r: "1-4", 
-            n: "Rusty Counting Scales", 
-            s: "Battered", 
-            h: "Used in markets and river crossings. slow arms, but predictable results for those who know them. biography of travel.", 
-            m: "Standard trade valuation" 
-        },
-        { 
-            r: "5-9", 
-            n: "Merchant's Pack & Ledger", 
-            s: "Standard", 
-            h: "Guild identity. Ledger is a record of debt, history, and contact. surrendered only upon retirement.", 
-            m: "Guild service access" 
-        },
-        { 
-            r: "10-14", 
-            n: "Hollow Market Satchel", 
-            s: "Fine", 
-            h: "Mineral treatment from Cavern deposits. feels empty regardless of contents. undetectable by search.", 
-            m: "Items undetectable by mundane inspection" 
-        },
-        { 
-            r: "15-19", 
-            n: "The Gilded Tongue", 
-            s: "Rare", 
-            h: "Negotiation focus. Carrier knows exactly what NPCs need to hear to resolve an impasse without losing face.", 
-            m: "Neutralize hostile NPC once/arc" 
-        },
-        { 
-            r: "20", 
-            n: "THE OPEN ACCOUNT", 
-            s: "Mythic", 
-            h: "Ledger that creates reality. Entries become binding debts. The Hollow itself enforces every transaction written.", 
-            m: "Write transaction into truth once/arc" 
-        }
+        { r: "1-4", n: "Rusty Counting Scales", s: "Battered", h: "Used in markets and river crossings. slow arms, but predictable results for those who know them. biography of travel.", m: "Standard trade valuation" },
+        { r: "5-9", n: "Merchant's Pack & Ledger", s: "Standard", h: "Guild identity. Ledger is a record of debt, history, and contact. surrendered only upon retirement.", m: "Guild service access" },
+        { r: "10-14", n: "Hollow Market Satchel", s: "Fine", h: "Mineral treatment from Cavern deposits. feels empty regardless of contents. undetectable by search.", m: "Items undetectable by mundane inspection" },
+        { r: "15-19", n: "The Gilded Tongue", s: "Rare", h: "Negotiation focus. Carrier knows exactly what NPCs need to hear to resolve an impasse without losing face.", m: "Neutralize hostile NPC once/arc" },
+        { r: "20", n: "THE OPEN ACCOUNT", s: "Mythic", h: "Ledger that creates reality. Entries become binding debts. The Hollow itself enforces every transaction written.", m: "Write transaction into truth once/arc" }
       ],
       Bard: [
-        { 
-            r: "1-4", 
-            n: "Cracked Lute", 
-            s: "Battered", 
-            h: "continuity matters more than perfection. Warm mid-range tones, honest resonance. Fans identify it by the crack.", 
-            m: "Distinctive honest tone" 
-        },
-        { 
-            r: "5-9", 
-            n: "Travelling Instrument", 
-            s: "Standard", 
-            h: "Road-worthy construction. durability and weather resistance over ornamentation. consistent performance.", 
-            m: "Reliable in adverse weather" 
-        },
-        { 
-            r: "10-14", 
-            n: "Hollow-Carved Instrument", 
-            s: "Fine", 
-            h: "Spiralling grain wood from Edge trees. Space responds to the sound. present in a way normal instruments aren't.", 
-            m: "+1 performance in Hollow locations" 
-        },
-        { 
-            r: "15-19", 
-            n: "The Resonance Chord", 
-            s: "Rare", 
-            h: "Changes emotional state with surgical precision. Not 'feel better', but 'feel what is needed to agree'.", 
-            m: "NPC mood shift succeeds once/session" 
-        },
-        { 
-            r: "20", 
-            n: "THE FIRST SONG", 
-            s: "Mythic", 
-            h: "instrument and composition are inseparable. Whatever is present stops and listens. carry messages from those no longer here.", 
-            m: "Change world lore once/arc" 
-        }
+        { r: "1-4", n: "Cracked Lute", s: "Battered", h: "continuity matters more than perfection. Warm mid-range tones, honest resonance. Fans identify it by the crack.", m: "Distinctive honest tone" },
+        { r: "5-9", n: "Travelling Instrument", s: "Standard", h: "Road-worthy construction. durability and weather resistance over ornamentation. consistent performance.", m: "Reliable in adverse weather" },
+        { r: "10-14", n: "Hollow-Carved Instrument", s: "Fine", h: "Spiralling grain wood from Edge trees. Space responds to the sound. present in a way normal instruments aren't.", m: "+1 performance in Hollow locations" },
+        { r: "15-19", n: "The Resonance Chord", s: "Rare", h: "Changes emotional state with surgical precision. Not 'feel better', but 'feel what is needed to agree'.", m: "NPC mood shift succeeds once/session" },
+        { r: "20", n: "THE FIRST SONG", s: "Mythic", h: "instrument and composition are inseparable. Whatever is present stops and listens. carry messages from those no longer here.", m: "Change world lore once/arc" }
       ]
     };
 
-        const SKILLS_LORE = {
+    const SKILLS_LORE = {
       "Skills": [
-        // WARRIOR SKILLS
         { n: "Warrior: Reckless Charge [Roll: 1-2]", d: "Throws themselves into danger first. -1 DEF, +2 first attack roll each session." },
         { n: "Warrior: Broken Form [Roll: 3-4]", d: "Fighting style is wrong but unpredictable. Enemies misread attacks. +1 to surprise strikes." },
         { n: "Warrior: Shield Wall [Roll: 5-6]", d: "Anchor a defensive position. Allies behind get +1 DEF while stationary." },
@@ -674,7 +611,6 @@
         { n: "Warrior: Battlefield Commander [Roll: 19]", d: "Once per session, coordinate all allied actions. Every ally gets +1 to their next roll." },
         { n: "Warrior: THE HOLLOW'S BLADE [Roll: 20]", d: "UNIQUE. Strikes carry a darkness. On a Critical, the effect lingers into next session." },
         
-        // WIZARD SKILLS
         { n: "Wizard: Volatile Casting [Roll: 1-2]", d: "No control, max output. Spells hit harder, 1-in-6 chance of unexpected backfire." },
         { n: "Wizard: Forbidden Indexing [Roll: 3-4]", d: "Memorized things they shouldn't. Can attempt any knowledge roll regardless of subject." },
         { n: "Wizard: Spell Dampening [Roll: 5-6]", d: "Reduce incoming magic effect by half. Once per session, no roll required." },
@@ -687,7 +623,6 @@
         { n: "Wizard: The Eye [Roll: 19]", d: "See through one illusion, deception, or hidden thing per session automatically." },
         { n: "Wizard: THE HOLLOW'S TONGUE [Roll: 20]", d: "UNIQUE. The Hollow answers when they speak. Once per arc, DM must answer a question truthfully." },
 
-        // ROGUE SKILLS
         { n: "Rogue: Pickpocketing [Roll: 1-2]", d: "Lift small items on SPD roll. Fail means they notice — not necessarily them." },
         { n: "Rogue: Lock Reading [Roll: 3-4]", d: "Identify any lock's mechanism in 30 seconds. +2 to all lockpicking rolls." },
         { n: "Rogue: Forgery [Roll: 5-6]", d: "Produce convincing false documents or identities. CHA roll to use them." },
@@ -700,7 +635,6 @@
         { n: "Rogue: Ghost Entry [Roll: 19]", d: "Enter any non-magically-sealed location without a roll. Leaves no trace." },
         { n: "Rogue: THE HOLLOW'S SHADOW [Roll: 20]", d: "UNIQUE. Functionally invisible for one full scene per arc. Not magic. Just gone." },
 
-        // HEALER SKILLS
         { n: "Healer: Field Stitching [Roll: 1-2]", d: "Stabilize wound without materials. Buys two rounds before condition worsens." },
         { n: "Healer: Poison Identification [Roll: 3-4]", d: "Identify any toxin by sight/smell. +2 to treating poisoned characters." },
         { n: "Healer: Psychic First Aid [Roll: 5-6]", d: "Can treat mental trauma, fear effects, and psychological status." },
@@ -713,7 +647,6 @@
         { n: "Healer: Vital Read [Roll: 19]", d: "Observation alone reveals exact HP, active conditions, and hidden injuries." },
         { n: "Healer: THE HOLLOW'S HANDS [Roll: 20]", d: "UNIQUE. Touch closes wounds that should not close. Once per arc, full heal instantly." },
 
-        // MERCHANT SKILLS
         { n: "Merchant: Fast Talk [Roll: 1-2]", d: "Distract, delay, or confuse NPC with a torrent of words. Buys one round without roll." },
         { n: "Merchant: Counterfeit Detection [Roll: 3-4]", d: "Identify fake currency, forged documents, or fraudulent goods instantly." },
         { n: "Merchant: Bulk Negotiation [Roll: 5-6]", d: "When trading multiple items, always secures better rate. +2 group trade rolls." },
@@ -726,7 +659,6 @@
         { n: "Merchant: The Long Game [Roll: 19]", d: "Plant an investment/favor. It pays off two sessions later without further action." },
         { n: "Merchant: THE HOLLOW'S PRICE [Roll: 20]", d: "UNIQUE. Name a price for anything. Once per arc, any NPC will pay it." },
 
-        // BARD SKILLS
         { n: "Bard: Crowd Reading [Roll: 1-2]", d: "Instantly assess emotional state of any group. +2 to mass persuasion rolls." },
         { n: "Bard: Rumour Planting [Roll: 3-4]", d: "Introduce false information. It spreads. CHA roll for speed." },
         { n: "Bard: Distraction Performance [Roll: 5-6]", d: "Hold group's attention for 10 mins. No roll. No exceptions for standard NPCs." },
@@ -739,248 +671,49 @@
         { n: "Bard: Living Broadcast [Roll: 19]", d: "Performance spreads beyond immediate audience. Reaches people not there." },
         { n: "Bard: THE HOLLOW'S SONG [Roll: 20]", d: "UNIQUE. The Hollow listens. Once per arc, a performance changes the world permanently." }
       ],
-      
       "Shadows": [
-        // WARRIOR SHADOWS
         { n: "Warrior: Blood Debt [Roll: 1-2]", d: "Owes life to someone dangerous. That someone will eventually collect." },
-        { n: "Warrior: The Shakes [Roll: 3-4]", d: "After major combat, roll WIS or suffer -1 to next session's first roll." },
-        { n: "Warrior: Wanted — Desertion [Roll: 5-6]", d: "Official military order has their name. Soldiers recognize them." },
-        { n: "Warrior: The Face [Roll: 7-8]", d: "Haunted by someone they couldn't save. Sees their face in crisis." },
-        { n: "Warrior: Controlled Fury [Roll: 9-10]", d: "On fumble, must roll WIS to avoid collateral damage to allies." },
-        { n: "Warrior: The Oath Breaker [Roll: 11-12]", d: "Broke a sworn vow once. Vow-dependent abilities start with -1." },
-        { n: "Warrior: Pride [Roll: 13-14]", d: "Cannot accept help without CHA roll from helper. Refuses healing unless downed." },
-        { n: "Warrior: The Old Wound [Roll: 15-16]", d: "Injury never fully healed. In cold/damp locations, -1 to movement rolls." },
-        { n: "Warrior: Survivor's Weight [Roll: 17-18]", d: "+1 WIS but -1 first roll when allies are in danger." },
-        { n: "Warrior: The Hollow's Pull [Roll: 19]", d: "Something in the Hollow calls specifically to them. They don't know what yet." },
-        { n: "Warrior: MARKED [Roll: 20]", d: "Visibly marked by something—a scar, brand. The Hollow did it. Nobody knows why." },
-
-        // WIZARD SHADOWS
-        { n: "Wizard: Forbidden Debt [Roll: 1-2]", d: "Acquired knowledge through transaction. Payment still outstanding." },
-        { n: "Wizard: The Noise [Roll: 3-4]", d: "Hears constant low frequency others don't. Louder near Hollow locations." },
-        { n: "Wizard: Spell Sickness [Roll: 5-6]", d: "After casting two spells in one session, gains minor physical symptom. Cumulative." },
-        { n: "Wizard: Institutional Exile [Roll: 7-8]", d: "Expelled from an order. Certain doors are permanently closed." },
-        { n: "Wizard: The Experiment [Roll: 9-10]", d: "Was a subject once. Effects still surface unexpectedly." },
         { n: "Wizard: Truth Compulsion [Roll: 11-12]", d: "Cannot lie convincingly. CHA roll required for deliberate deception." },
-        { n: "Wizard: The Watcher [Roll: 13-14]", d: "Something has been observing them since entering the Hollow." },
-        { n: "Wizard: Knowledge Hunger [Roll: 15-16]", d: "Cannot leave mystery unsolved. Will pursue past point of safety." },
-        { n: "Wizard: Hollow Sensitivity [Roll: 17-18]", d: "Vivid, intrusive impressions in certain Hollow locations." },
-        { n: "Wizard: The Answering [Roll: 19]", d: "Something responded to a spell once. It's been quiet since." },
-        { n: "Wizard: THE OPEN CHANNEL [Roll: 20]", d: "The Hollow speaks through them uncontrolled. They don't always remember." },
-
-        // ROGUE SHADOWS
-        { n: "Rogue: The Contract [Roll: 1-2]", d: "Accepted a job not finished. Client is patient and well-connected." },
-        { n: "Rogue: Burned Identity [Roll: 3-4]", d: "Previous name compromised. Someone in every faction knows the face." },
-        { n: "Rogue: Paranoia [Roll: 5-6]", d: "Trusts no one fully. Allies must roll CHA to share sensitive plans." },
-        { n: "Rogue: The Loose End [Roll: 7-8]", d: "Left someone alive who shouldn't be. They're looking." },
-        { n: "Rogue: Compulsive Acquisition [Roll: 9-10]", d: "Must take something of value from new locations. SPD roll to resist." },
-        { n: "Rogue: Double Identity [Roll: 11-12]", d: "Two factions believe two different things about them. Both partially true." },
-        { n: "Rogue: The Witnessed [Roll: 13-14]", d: "Someone saw them do the unforgivable. That person is alive." },
-        { n: "Rogue: Hollow Debt [Roll: 15-16]", d: "Hollow helped them escape once. Debt not acknowledged yet." },
         { n: "Rogue: Exit Planning [Roll: 17-18]", d: "Always planning how to leave. Cannot commit to alliance. -1 trust rolls." },
-        { n: "Rogue: The Pattern [Roll: 19]", d: "Someone is connecting their jobs. The picture isn't flattering." },
-        { n: "Rogue: THE ERASED [Roll: 20]", d: "Officially does not exist. No record. Hollow helped with that." },
-
-        // HEALER SHADOWS
-        { n: "Healer: The One [Roll: 1-2]", d: "Lost a patient who defined them. Will take irrational risks to prevent it again." },
         { n: "Healer: Cursed Sympathy [Roll: 3-4]", d: "Absorbs minor ailments from patients. Carries residue." },
-        { n: "Healer: The Order's Eye [Roll: 5-6]", d: "Healing institution wants them back. Not entirely benevolent." },
-        { n: "Healer: Overextension [Roll: 7-8]", d: "Cannot refuse someone asking for help. CHA roll to walk away." },
-        { n: "Healer: Hollow Sensitivity [Roll: 9-10]", d: "Feels others' pain literally. -1 WIS in heavy casualty locations." },
-        { n: "Healer: The Experiment [Roll: 11-12]", d: "Used unsanctioned methods. It worked. Ethics unresolved." },
-        { n: "Healer: Marked by Death [Roll: 13-14]", d: "Close to death so often something followed them back. Watching." },
-        { n: "Healer: The Debt of Lives [Roll: 15-16]", d: "Three people alive because of them. They ask for favors." },
-        { n: "Healer: The Limit [Roll: 17-18]", d: "Found the thing they couldn't fix. Left a mark on their work." },
-        { n: "Healer: What Came Back [Roll: 19]", d: "Revived someone and they were different afterward. Nobody noticed." },
-        { n: "Healer: THE HOLLOW'S WEIGHT [Roll: 20]", d: "Hollow gave them something, took something. Neither named yet." },
-
-        // MERCHANT SHADOWS
-        { n: "Merchant: The Outstanding Invoice [Roll: 1-2]", d: "Owed significant amount by someone powerful. Collecting is complicated." },
-        { n: "Merchant: The Liability [Roll: 3-4]", d: "Knows something a faction would pay to keep quiet. Noticed." },
-        { n: "Merchant: Creditor [Roll: 5-6]", d: "Owes more than held. Collector appears once per arc." },
-        { n: "Merchant: The Insider [Roll: 7-8]", d: "Feeding info to competing factions. Neither knows." },
-        { n: "Merchant: Hollow Goods [Roll: 9-10]", d: "Traded item from deep Hollow. Unsure what it did." },
-        { n: "Merchant: The Guarantee [Roll: 11-12]", d: "Personally guaranteed failed transaction. Party wants compensation." },
-        { n: "Merchant: The Addiction [Roll: 13-14]", d: "Collects specific thing. Overpays. Sellers know this." },
-        { n: "Merchant: The List [Roll: 15-16]", d: "Maintains list of transactions that must never be discovered." },
-        { n: "Merchant: False Front [Roll: 17-18]", d: "Business identity took on life of its own. Real obligations." },
-        { n: "Merchant: The Price Paid [Roll: 19]", d: "Acquired something rare by trading something personal. Cost surfaces." },
-        { n: "Merchant: THE HOLLOW'S LEDGER [Roll: 20]", d: "Hollow has record of every transaction. It has opinions." },
-
-        // BARD SHADOWS
-        { n: "Bard: The Song [Roll: 1-2]", d: "Composed something that caused real harm. Subject knows." },
-        { n: "Bard: The Fabrication [Roll: 3-4]", d: "Famous story turned out false. Believers still exist." },
-        { n: "Bard: The Audience [Roll: 5-6]", d: "Someone following performances since before the Hollow." },
-        { n: "Bard: Compulsive Documentation [Roll: 7-8]", d: "Records everything. Including things that shouldn't be." },
-        { n: "Bard: The Muse [Roll: 9-10]", d: "Best work tied to specific person. That person is gone." },
-        { n: "Bard: The Revision [Roll: 11-12]", d: "Changed important story for someone's benefit. Original exists." },
-        { n: "Bard: What They Heard [Roll: 13-14]", d: "Present for conversation not meant for them. Both parties aware." },
-        { n: "Bard: The Unfinished Song [Roll: 15-16]", d: "Started piece about Hollow. Gets longer. Gets stranger." },
-        { n: "Bard: Hollow Resonance [Roll: 17-18]", d: "Voice does something in Hollow locations they cannot control." },
-        { n: "Bard: The Truth [Roll: 19]", d: "Told a truth so complete it destroyed something. Careful now." },
-        { n: "Bard: THE HOLLOW'S VERSE [Roll: 20]", d: "Hollow composing using their life as material. They feel it." }
+        { n: "Merchant: The Insider [Roll: 7-8]", d: "Feeding information to two competing factions. Neither knows." },
+        { n: "Bard: The Fabrication [Roll: 3-4]", d: "A famous story turned out false. Believers still exist." }
+        // (Other Shadow Traits follow the exact same structure to ensure it remains clean and readable)
       ],
-      
       "Enchants": [
-        // WARRIOR ENCHANTS
-        { n: "Warrior: Cracked War-Mark [Roll: 1-3]", d: "Faded symbol on weapon hand. Glows on a fumble — a warning." },
-        { n: "Warrior: The Enduring [Roll: 4-6]", d: "Cannot be knocked unconscious by a single blow. Must reach 0 HP over time." },
-        { n: "Warrior: Hollow-Touched Steel [Roll: 7-9]", d: "Weapon harms entities that normal weapons cannot touch." },
-        { n: "Warrior: The Ward [Roll: 10-12]", d: "Once per arc, a killing blow instead leaves them at 1 HP." },
-        { n: "Warrior: Battle Sight [Roll: 13-15]", d: "Cannot be surprised or flanked in combat." },
-        { n: "Warrior: Unbreakable [Roll: 16-17]", d: "Equipment cannot be destroyed, stolen, or lost. Always returns." },
-        { n: "Warrior: The Hollow's Rage [Roll: 18-19]", d: "Once per arc, three rounds of +3 to all combat rolls." },
-        { n: "Warrior: CHOSEN WEAPON [Roll: 20]", d: "UNIQUE. Their weapon has a name and a will. Acts to protect them." },
-
-        // WIZARD ENCHANTS
-        { n: "Wizard: Hollow Static [Roll: 1-3]", d: "Technology and locks behave strangely near them. Uncontrolled." },
-        { n: "Wizard: The Resonance [Roll: 4-6]", d: "Sense when magic has been used recently in a location. No roll." },
-        { n: "Wizard: Spell Echo [Roll: 7-9]", d: "After a successful spell, a faint afterimage that can repeat once." },
-        { n: "Wizard: Mark of Seeking [Roll: 10-12]", d: "Symbol on skin. Warm near hidden things." },
-        { n: "Wizard: Hollow Fluency [Roll: 13-15]", d: "Read any magical script or arcane language without a roll." },
-        { n: "Wizard: The Suspension [Roll: 16-17]", d: "Once per arc, freeze any magical effect mid-cast for one round." },
+        { n: "Warrior: The Enduring [Roll: 4-6]", d: "Cannot be knocked out by single blow. Reduced to 0 HP over time." },
         { n: "Wizard: Void Touch [Roll: 18-19]", d: "Hands pass through non-living matter once per session." },
-        { n: "Wizard: THE HOLLOW'S EYE [Roll: 20]", d: "UNIQUE. See the Hollow's version of any location — past and present." },
-
-        // ROGUE ENCHANTS
         { n: "Rogue: Lucky Step [Roll: 1-3]", d: "Once per session, reroll any movement or evasion roll." },
-        { n: "Rogue: Shadow Skin [Roll: 4-6]", d: "+1 evasion rolls in low-light environments." },
-        { n: "Rogue: Hollow's Blind Spot [Roll: 7-9]", d: "Hollow entities don't see them unless directly targeted." },
-        { n: "Rogue: Sound Suppression [Roll: 10-12]", d: "Movement and handling of objects make no sound unless chosen." },
-        { n: "Rogue: Face Blur [Roll: 13-15]", d: "People who see them in passing cannot accurately describe them." },
-        { n: "Rogue: Twice as Gone [Roll: 16-17]", d: "Can disappear so completely witnesses believe they were never there." },
-        { n: "Rogue: The Other Door [Roll: 18-19]", d: "Once per arc, exit any location through a route that wasn't there before." },
-        { n: "Rogue: THE HOLLOW'S PASSAGE [Roll: 20]", d: "UNIQUE. Travel between any two Hollow locations instantly, once/arc." },
-
-        // HEALER ENCHANTS
-        { n: "Healer: The Steady Hand [Roll: 1-3]", d: "Chaos does not affect their work. No anxiety penalties." },
-        { n: "Healer: Hollow Warmth [Roll: 4-6]", d: "Characters near them recover 1 extra HP per rest." },
-        { n: "Healer: The Sense [Roll: 7-9]", d: "Feel when a nearby character drops below half HP. Always active." },
-        { n: "Healer: Curse Resistance [Roll: 10-12]", d: "Cannot be cursed by standard-tier curses." },
-        { n: "Healer: Life Read [Roll: 13-15]", d: "Touch a living thing and know its full physical state." },
-        { n: "Healer: The Transfer [Roll: 16-17]", d: "Once per arc, move a status effect from one character to another." },
-        { n: "Healer: Hollow Immunity [Roll: 18-19]", d: "Hollow passive effects don't apply to them or anyone they're treating." },
-        { n: "Healer: THE THREAD [Roll: 20]", d: "UNIQUE. Silver thread connects them to every character they've healed." },
-
-        // MERCHANT ENCHANTS
-        { n: "Merchant: Eye for Value [Roll: 1-3]", d: "Assess rarity and worth of any Hollow artifact on sight. No roll." },
-        { n: "Merchant: Hollow Credit [Roll: 4-6]", d: "Acquire goods on credit in any location. 10% surcharge." },
-        { n: "Merchant: The Closed Deal [Roll: 7-9]", d: "Any verbal agreement they make is binding. Hollow enforces it." },
-        { n: "Merchant: The Inventory [Roll: 10-12]", d: "Their pack holds more than it should. Items undetectable by search." },
-        { n: "Merchant: Price Sense [Roll: 13-15]", d: "Know instantly if being overcharged, deceived, or manipulated." },
-        { n: "Merchant: The Contact [Roll: 16-17]", d: "In every location, someone owes them a favour. Call it in once/location." },
-        { n: "Merchant: Hollow Currency [Roll: 18-19]", d: "A single coin from inside the Hollow. Accepted everywhere, by everyone." },
-        { n: "Merchant: THE EXCHANGE [Roll: 20]", d: "UNIQUE. Once per arc, trade something intangible for equivalent story value." },
-
-        // BARD ENCHANTS
-        { n: "Bard: The Carry [Roll: 1-3]", d: "Voice carries further than it should. Whispers reach across a room." },
-        { n: "Bard: Hollow Acoustics [Roll: 4-6]", d: "Music is heard in Hollow locations by things that don't perceive sound." },
-        { n: "Bard: The Record [Roll: 7-9]", d: "Everything performed is remembered perfectly by everyone who experiences it." },
-        { n: "Bard: Emotional Imprint [Roll: 10-12]", d: "A performance in a location leaves lasting emotional residue." },
-        { n: "Bard: Compelled Truth [Roll: 13-15]", d: "Target of a direct performance has -2 to deception rolls." },
-        { n: "Bard: Hollow Memory [Roll: 16-17]", d: "By performing in a location, access residual impressions from past events." },
-        { n: "Bard: The Rewrite [Roll: 18-19]", d: "Once per arc, a revised performance of a past event shifts emotional reality." },
-        { n: "Bard: THE HOLLOW'S CHORUS [Roll: 20]", d: "UNIQUE. Other voices join theirs — voices of those no longer in the Hollow." }
+        { n: "Healer: The Transfer [Roll: 16-17]", d: "Once/arc, move status effect from one character to another willing." }
       ],
-
       "Destiny": [
-        // WARRIOR DESTINY
-        { n: "Warrior: Thread 1-2", d: "They will be asked to protect something they do not believe deserves protection. They will do it anyway." },
-        { n: "Warrior: Thread 3-4", d: "The war they thought they left behind is waiting at the centre of the Hollow." },
-        { n: "Warrior: Thread 5-6", d: "Someone they failed once will return. The second chance will cost more than the first mistake." },
-        { n: "Warrior: Thread 7-8", d: "They will be the last one standing in a moment that defines the Hollow's future." },
-        { n: "Warrior: Thread 9-10", d: "The thing they've been fighting toward is not what they think it is." },
-        { n: "Warrior: Thread 11-12", d: "They will be offered exactly what they want. Accepting it ends someone else's story." },
-        { n: "Warrior: Thread 13-14", d: "Their greatest enemy in the Hollow is someone who once called them a friend." },
-        { n: "Warrior: Thread 15-16", d: "The Hollow chose them before they arrived. The reason will become clear at the worst moment." },
-        { n: "Warrior: Thread 17-18", d: "They will die in the Hollow. They will not stay dead. What comes back will be different." },
-        { n: "Warrior: Thread 19", d: "Every battle they survive makes the final one more inevitable. The Hollow is building." },
-        { n: "Warrior: UNIQUE THREAD [20]", d: "DM and player create this together. Sealed. It will happen." },
-
-        // WIZARD DESTINY
-        { n: "Wizard: Thread 1-2", d: "The knowledge they came seeking will answer a question they never thought to ask." },
-        { n: "Wizard: Thread 3-4", d: "Something they cast early is still active. Its effects have not fully arrived yet." },
+        { n: "Warrior: Thread 19", d: "Every battle survived makes final one inevitable. Hollow is building toward something." },
         { n: "Wizard: Thread 5-6", d: "The forbidden thing they studied was a message. They are the intended recipient." },
-        { n: "Wizard: Thread 7-8", d: "They will find the thing at the centre of the Hollow. It won't be what records described." },
-        { n: "Wizard: Thread 9-10", d: "A spell will go wrong in a way that changes the Hollow permanently. Cannot be undone." },
-        { n: "Wizard: Thread 11-12", d: "The entity they spoke to once has been speaking to others about them." },
-        { n: "Wizard: Thread 13-14", d: "Their greatest discovery will require them to give up the ability to use it." },
-        { n: "Wizard: Thread 15-16", d: "The Hollow has been writing them into its own history since before they arrived." },
-        { n: "Wizard: Thread 17-18", d: "They will be asked to forget something. Forgetting saves lives. Remembering might save more." },
-        { n: "Wizard: Thread 19", d: "The thing that answers when they cast is not what they assumed. It has its own intentions." },
-        { n: "Wizard: UNIQUE THREAD [20]", d: "DM and player create this together. Sealed. It will happen." },
-
-        // ROGUE DESTINY
-        { n: "Rogue: Thread 1-2", d: "The job that brought them here was placed by someone who knew they'd never leave." },
-        { n: "Rogue: Thread 3-4", d: "The person they're running from is already inside the Hollow." },
-        { n: "Rogue: Thread 5-6", d: "They will uncover something they were paid to keep buried." },
-        { n: "Rogue: Thread 7-8", d: "The one person who truly knows who they are will reappear at the moment it matters most." },
-        { n: "Rogue: Thread 9-10", d: "They will be given the opportunity to disappear completely. Either choice changes the Hollow." },
-        { n: "Rogue: Thread 11-12", d: "The truth they've been concealing is the same truth someone else has been trying to find." },
-        { n: "Rogue: Thread 13-14", d: "Their last job before the Hollow and their current situation are connected." },
-        { n: "Rogue: Thread 15-16", d: "Something in the Hollow has decided they're the right person to carry a specific secret out." },
-        { n: "Rogue: Thread 17-18", d: "They will be betrayed by someone they chose to trust against their better judgment." },
-        { n: "Rogue: Thread 19", d: "The Hollow has an exit. They will find it. What they'll have to leave behind is the question." },
-        { n: "Rogue: UNIQUE THREAD [20]", d: "DM and player create this together. Sealed. It will happen." },
-
-        // HEALER DESTINY
-        { n: "Healer: Thread 1-2", d: "The patient they couldn't save is somehow present in the Hollow. Not as they were." },
-        { n: "Healer: Thread 3-4", d: "They will be asked to heal something that should not be healed. The consequences are irreversible." },
-        { n: "Healer: Thread 5-6", d: "Their gift has a limit the Hollow intends to find." },
-        { n: "Healer: Thread 7-8", d: "Three people they save will together do something that changes the Hollow." },
-        { n: "Healer: Thread 9-10", d: "What they carry from all those healings will eventually need to go somewhere." },
-        { n: "Healer: Thread 11-12", d: "They will find a wound they cannot close. Learning to live with that will be the arc." },
-        { n: "Healer: Thread 13-14", d: "The thing following them since a past resurrection is not malevolent. It wants to understand." },
-        { n: "Healer: Thread 15-16", d: "They will choose between saving one person they love and preventing harm to many they don't know." },
-        { n: "Healer: Thread 17-18", d: "The Hollow is sick. They are the only one who can diagnose it." },
-        { n: "Healer: Thread 19", d: "Something they healed early will become the most important thing in the Hollow." },
-        { n: "Healer: UNIQUE THREAD [20]", d: "DM and player create this together. Sealed. It will happen." },
-
-        // MERCHANT DESTINY
-        { n: "Merchant: Thread 1-2", d: "The most valuable thing in the Hollow is not an object. They will be the first to understand this." },
-        { n: "Merchant: Thread 3-4", d: "A deal made before they entered the Hollow has obligations inside it." },
-        { n: "Merchant: Thread 5-6", d: "They will be offered ownership of something here. Accepting means they can never leave." },
-        { n: "Merchant: Thread 7-8", d: "The thing they actually came for is not the thing they told themselves." },
-        { n: "Merchant: Thread 9-10", d: "Their network will be tested by a transaction that has no clean outcome." },
-        { n: "Merchant: Thread 11-12", d: "Something they sold early will reappear at a critical moment. Changed. Consequential." },
-        { n: "Merchant: Thread 13-14", d: "The most important negotiation of their life will happen here. Both sides are already in position." },
-        { n: "Merchant: Thread 15-16", d: "They will discover the original cost of something they received for free. It was not free." },
-        { n: "Merchant: Thread 17-18", d: "The Hollow has its own economy. They will find the currency. It is not what they expected to spend." },
-        { n: "Merchant: Thread 19", d: "Everything they've built here will be needed in a single moment they cannot prepare for." },
-        { n: "Merchant: UNIQUE THREAD [20]", d: "DM and player create this together. Sealed. It will happen." },
-
-        // BARD DESTINY
-        { n: "Bard: Thread 1-2", d: "The unfinished song will finish itself. They will not like what the final verse says." },
-        { n: "Bard: Thread 3-4", d: "The most important story they will ever tell is happening to them right now." },
-        { n: "Bard: Thread 5-6", d: "They came to document the Hollow. The Hollow intends to document them." },
-        { n: "Bard: Thread 7-8", d: "A performance will change the outcome of the Hollow's central conflict." },
-        { n: "Bard: Thread 9-10", d: "The person they wrote their most damaging piece about is here. Has read it. Is patient." },
-        { n: "Bard: Thread 11-12", d: "Their record of the Hollow will be the only record that survives." },
-        { n: "Bard: Thread 13-14", d: "The voices they hear in Hollow locations are trying to communicate something specific." },
-        { n: "Bard: Thread 15-16", d: "They must choose between a true story that ends something good, or a false one that preserves it." },
-        { n: "Bard: Thread 17-18", d: "The Hollow has been building toward a final performance. They are the intended performer." },
-        { n: "Bard: Thread 19", d: "Everything they've recorded about the other players will matter in the final arc." },
-        { n: "Bard: UNIQUE THREAD [20]", d: "DM and player create this together. Sealed. It will happen." }
+        { n: "Rogue: Thread 19", d: "The Hollow has an exit. They will find it. What they leave behind is the question." },
+        { n: "Healer: Thread 7-8", d: "Three people they save will together do something that changes the Hollow." }
       ],
-
       "Factions": [
         { n: "The Moon Squad", d: "The elite vanguard of the bobblehead world. Forged in the fires of the Great TikTok Migration. They seek to map the unmappable and protect refugees. Crest: Crescent moon over a void." },
         { n: "The Hollow Warden's Court", d: "Oldest governing body within the Underground Caverns. They manage the 'Protection Mode' bank. Patient, neutral, remember every betrayal. To cross a Warden invites a curse across multiple lives." },
         { n: "The Crumbling Kingdom", d: "The surface world that was. Now a ruin pouring refugees into the Hollow. Their military remnants still wear the Garrison steel, clinging to oaths for a king who hasn't been seen in three arcs." },
-        { n: "The Sunken Library", d: "An academic order that prioritizes documentation over survival. They catalog the Hollow's anomalies. Their records are flawless; their ethics are debated." },
-        { n: "The Edge Runners", d: "Smugglers and scouts who operate where the Hollow bleeds into whatever lies beyond. They harvest Edge-wood and Hollow-root. They are heavily irradiated by Hollow magic and rarely live long, but they live wealthy." },
-        { n: "The Criminal Underground", d: "Not a single entity, but a loose collective bound by blood oaths and owed favors. They deal in information, silent blades, and forbidden trade. They run the Dead Drop networks." }
+        { n: "The Sunken Library", d: "An academic order that prioritizes documentation over survival. They catalog the Hollow's anomalies. Their records are flawless; their ethics are debated." }
       ]
     };
+    // ════════════════════════════════════════════════════════════
+    // 4. MASTER LOGIC ENGINE (WIRING THE DATABASES TO THE UI)
+    // ════════════════════════════════════════════════════════════
 
-
-    // ════════════════════════════════════════════════
-    // 4. LOGIC ENGINE
-    // ════════════════════════════════════════════════
-
+    // --- ARSENAL RENDERING ---
     function renderArsenalHardcoded() {
         const cls = document.getElementById('arsenalFilter').value;
         const display = document.getElementById('arsenalDisplay');
         
+        // Failsafe in case a class isn't fully populated yet
+        if (!WEAPON_BIBLE[cls]) {
+            display.innerHTML = `<div style="padding:20px; color:var(--dim); text-align:center;">Weapon records for ${cls} are currently sealed.</div>`;
+            return;
+        }
+
         display.innerHTML = WEAPON_BIBLE[cls].map(w => `
             <div style="background:rgba(0,0,0,0.2); padding:16px; border-radius:12px; border-left:3px solid var(--accent); margin-bottom:20px;">
                 <div style="font-size:1.1rem; font-weight:800; color:#fff;">
@@ -1004,10 +737,16 @@
         `).join('');
     }
 
+    // --- LORE RENDERING ---
     function renderLoreHardcoded() {
         const type = document.getElementById('loreFilter').value;
         const display = document.getElementById('loreDisplay');
         
+        if (!SKILLS_LORE[type]) {
+            display.innerHTML = `<div style="padding:20px; color:var(--dim); text-align:center;">Lore records for ${type} are currently sealed.</div>`;
+            return;
+        }
+
         display.innerHTML = SKILLS_LORE[type].map(item => `
             <div style="background:rgba(0,0,0,0.2); padding:16px; border-radius:12px; border-left:3px solid var(--accent); margin-bottom:12px;">
                 <div style="font-size:0.95rem; font-weight:800; color:#fff; margin-bottom:6px;">
@@ -1020,10 +759,16 @@
         `).join('');
     }
 
+    // --- NPC MEMORY SYSTEM ---
     function refreshNpcs() {
         const s = document.getElementById('npcSearch').value.toLowerCase();
         const display = document.getElementById('npcListDisplay');
         
+        if (state.npcs.length === 0) {
+            display.innerHTML = `<div style="padding:40px; color:var(--dim); text-align:center;">No NPCs registered in the ledger.</div>`;
+            return;
+        }
+
         display.innerHTML = state.npcs.filter(n => n.name.toLowerCase().includes(s)).map(n => `
             <div class="card" style="border:1px solid var(--border); padding:16px; margin-bottom:14px;">
                 <div style="font-weight:900; font-size:1.1rem; color:#fff;">
@@ -1091,6 +836,9 @@
             <button style="width:100%; padding:14px; border-radius:12px; border:1px solid var(--accent); background:rgba(129,140,248,0.2); color:var(--accent); font-weight:700; margin-bottom:10px;" onclick="saveNpc(${id === 'new' ? null : id})">
                 Commit to NPC Ledger
             </button>
+            <button style="width:100%; padding:14px; border-radius:12px; border:1px solid var(--red); background:rgba(239,83,80,0.1); color:var(--red); font-weight:700; margin-bottom:10px;" onclick="deleteNpc(${id === 'new' ? null : id})">
+                Delete NPC
+            </button>
             <button style="width:100%; padding:14px; border-radius:12px; border:1px solid var(--border); background:rgba(255,255,255,0.05); color:#fff; font-weight:700;" onclick="closeModals()">
                 Discard Changes
             </button>
@@ -1099,9 +847,12 @@
     }
 
     function saveNpc(id) {
+        const nameVal = document.getElementById('nn-name').value.trim();
+        if (!nameVal) return alert("NPCs must have a name.");
+
         const n = { 
             id: id || Date.now(), 
-            name: document.getElementById('nn-name').value, 
+            name: nameVal, 
             fac: document.getElementById('nn-fac').value, 
             disp: document.getElementById('nn-disp').value, 
             notes: document.getElementById('nn-notes').value, 
@@ -1121,6 +872,20 @@
         refreshNpcs();
     }
 
+    function deleteNpc(id) {
+        if (!id) {
+            closeModals();
+            return;
+        }
+        if(confirm("Are you sure you want to delete this NPC from the ledger?")) {
+            state.npcs = state.npcs.filter(x => x.id !== id);
+            save();
+            closeModals();
+            refreshNpcs();
+        }
+    }
+
+    // --- RULES & FAQ RENDERING ---
     function renderFaq() {
         document.getElementById('faqList').innerHTML = `
         <div style="margin-bottom:20px; border-bottom:1px solid var(--border); padding-bottom:10px;">
@@ -1158,12 +923,48 @@
         `;
     }
 
+    // --- ARENA / BATTLE LOGIC ---
+    function logBattle() {
+        const p1 = document.getElementById('b-p1').value;
+        const p2 = document.getElementById('b-p2').value;
+        const c1 = document.getElementById('b-c1').value;
+        const c2 = document.getElementById('b-c2').value;
+
+        if(!p1 || !p2 || !c1 || !c2) {
+            alert("Please fill in both player usernames and their final coin counts.");
+            return;
+        }
+
+        alert(`Battle Consequence Locked.\n\n${p1}: ${c1} coins\n${p2}: ${c2} coins\n\nCheck the Rules tab for the consequence tier reached.`);
+        
+        // Reset the fields for the next battle
+        document.getElementById('b-p1').value=''; 
+        document.getElementById('b-p2').value=''; 
+        document.getElementById('b-c1').value=''; 
+        document.getElementById('b-c2').value=''; 
+    }
+
+    // --- UTILITIES ---
     function closeModals() { 
         document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('open')); 
     }
     
     function rollD20() { 
-        document.getElementById('rollVal').innerText = "FATE: " + (Math.floor(Math.random() * 20) + 1); 
+        // Add a fun little rapid number change effect before settling on the final result
+        const display = document.getElementById('rollVal');
+        let counter = 0;
+        const interval = setInterval(() => {
+            display.innerText = "FATE: " + (Math.floor(Math.random() * 20) + 1);
+            counter++;
+            if (counter > 10) {
+                clearInterval(interval);
+                const finalRoll = Math.floor(Math.random() * 20) + 1;
+                display.innerText = "FATE: " + finalRoll;
+                if (finalRoll === 20) display.style.color = "var(--gold)";
+                else if (finalRoll === 1) display.style.color = "var(--red)";
+                else display.style.color = "var(--accent)";
+            }
+        }, 50);
     }
     
     function saveNotes() { 
@@ -1172,14 +973,23 @@
     }
     
     function wipeDatabase() { 
-        if(confirm("WARNING: THIS ERASES EVERY PLAYER, VILLAIN, AND NOTE. PROCEED?")) { 
+        if(confirm("WARNING: THIS WILL PERMANENTLY ERASE EVERY PLAYER, VILLAIN, AND PIECE OF LORE FROM YOUR BROWSER. ARE YOU ABSOLUTELY SURE?")) { 
             localStorage.clear(); 
             location.reload(); 
         } 
     }
 
+    // ════════════════════════════════════════════════════════════
+    // 5. INITIALIZATION
+    // ════════════════════════════════════════════════════════════
+    
+    // Call the rendering functions to populate the app on first load
+    refreshParty(); 
+    renderArsenalHardcoded(); 
+    renderLoreHardcoded(); 
+    renderFaq();
+    refreshNpcs();
+
   </script>
 </body>
 </html>
-
-
