@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>THE HOLLOW REALM: WORLD BIBLE</title>
+  
+  <style>
+    :root {
+      --bg: #02040a; --surface: rgba(13, 17, 30, 0.45); --card: rgba(20, 25, 45, 0.55);
+      --border: rgba(125, 150, 255, 0.15); --border-glow: rgba(125, 170, 255, 0.4);
+      --accent: #818cf8; --gold: #fbbf24; --red: #f87171; --green: #34d399; --purple: #a78bfa;
+      --text: #f8fafc; --dim: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, system-ui, sans-serif; }
+    body { background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; -webkit-tap-highlight-color: transparent; line-height: 1.5; }
+
+    /* --- LIQUID UI --- */
+    .header-img { width: 100%; height: 220px; object-fit: cover; object-position: center top; -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%); position: absolute; top: 0; left: 0; z-index: 0; }
+    .header-glass { background: rgba(2, 4, 10, 0.3); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); padding: 24px 16px 16px; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .live-badge { background: rgba(251, 191, 36, 0.15); border: 1px solid var(--gold); color: var(--gold); font-size: 0.65rem; font-weight: 800; padding: 4px 14px; border-radius: 20px; letter-spacing: 2px; text-transform: uppercase; animation: pulse 2s infinite; }
+    
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
+
+    .tabs { display: flex; background: rgba(10, 15, 30, 0.8); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; padding: 6px 10px; position: sticky; top: 72px; z-index: 999; }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab { padding: 12px 18px; font-size: 0.75rem; font-weight: 700; color: var(--dim); cursor: pointer; white-space: nowrap; border-radius: 20px; margin: 4px; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid transparent; flex-shrink: 0; }
+    .tab.active { color: #fff; background: rgba(129, 140, 248, 0.25); border-color: rgba(129, 140, 248, 0.4); box-shadow: 0 0 15px rgba(129, 140, 248, 0.2); }
+
+    .panel { display: none; padding: 20px 16px 120px; position: relative; z-index: 10; max-width: 800px; margin: 0 auto; }
+    .panel.active { display: block; animation: slideUp 0.4s ease-out; }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* --- CARDS & BLOCKS --- */
+    .card { background: var(--card); backdrop-filter: blur(16px); border: 1px solid var(--border); border-radius: 20px; padding: 20px; margin-bottom: 20px; position: relative; overflow: hidden; }
+    .card::before { content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent); opacity: 0.5; }
+    .section-title { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .section-title::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+
+    /* --- INPUTS --- */
+    .input-label { display: block; font-size: 0.7rem; font-weight: 700; color: var(--dim); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; }
+    .input { width: 100%; padding: 14px 16px; background: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: 14px; color: var(--text); font-size: 0.95rem; outline: none; transition: 0.2s; margin-bottom: 16px; -webkit-appearance: none; }
+    .input:focus { border-color: var(--accent); background: rgba(0,0,0,0.6); box-shadow: 0 0 15px rgba(129,140,248,0.1); }
+    select.input option { background: #0a0f1e; color: #fff; }
+    
+    .btn { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--accent); background: rgba(129, 140, 248, 0.2); color: var(--accent); font-weight: 700; cursor: pointer; text-align: center; margin-bottom: 10px; }
+    .btn-sm { padding: 6px 12px; border-radius: 8px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); color: #fff; font-size: 0.7rem; cursor: pointer; }
+
+    /* --- PLAYER UI --- */
+    .player-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 16px; margin-bottom: 14px; transition: 0.3s; }
+    .avatar-stack { position: relative; width: 70px; height: 70px; margin-right: 16px; }
+    .avatar-main { width: 70px; height: 70px; border-radius: 18px; object-fit: cover; border: 1px solid var(--border); background: #0a0f1e; }
+    .avatar-sub { position: absolute; bottom: -6px; right: -6px; width: 32px; height: 32px; border-radius: 50%; border: 3px solid var(--bg); object-fit: cover; background: #1a2035; }
+    .hp-bar { height: 6px; background: rgba(0,0,0,0.5); border-radius: 3px; overflow: hidden; margin-top: 4px; }
+    .hp-fill { height: 100%; transition: width 0.3s ease; }
+
+    /* --- VILLAINS & HOF --- */
+    .villain-card { background: rgba(20,8,8,0.6); border: 1px solid rgba(239,83,80,0.4); border-radius: 16px; padding: 16px; margin-bottom: 14px; }
+    .hof-card { background: rgba(30,25,5,0.6); border: 1px solid rgba(255,213,79,0.4); border-radius: 16px; padding: 16px; margin-bottom: 14px; box-shadow: 0 0 20px rgba(255,213,79,0.1); }
+    .phase-badge { font-size: 0.6rem; padding: 3px 8px; border-radius: 6px; font-weight: 800; text-transform: uppercase; margin-right: 5px; border: 1px solid currentColor; }
+
+    /* --- MODALS --- */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 1000; padding: 20px; align-items: center; justify-content: center; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: var(--bg); border: 1px solid var(--border-glow); border-radius: 24px; width: 100%; max-width: 450px; padding: 24px; max-height: 85vh; overflow-y: auto; }
+
+    .ripple { position: fixed; width: 80px; height: 80px; margin-left: -40px; margin-top: -40px; background: radial-gradient(circle, rgba(129, 140, 248, 0.4) 0%, rgba(129, 140, 248, 0) 70%); border-radius: 50%; pointer-events: none; z-index: 9999; animation: rippleAnim 0.7s ease-out forwards; }
+    @keyframes rippleAnim { 0% { transform: scale(0.3); opacity: 1; } 100% { transform: scale(3); opacity: 0; } }
+  </style>
+</head>
+<body>
+
+  <script>
+    document.addEventListener('pointerdown', function(e) {
+      if(['BUTTON', 'INPUT', 'SELECT', 'TEXTAREA'].includes(e.target.tagName) || e.target.closest('label')) return;
+      const r = document.createElement('div');
+      r.className = 'ripple'; r.style.left = e.clientX + 'px'; r.style.top = e.clientY + 'px';
+      document.body.appendChild(r); setTimeout(() => r.remove(), 800);
+    });
+  </script>
+
+  <img src="IMG_5131.png" class="header-img" onerror="this.style.display='none'">
+  <div class="header-glass">
+    <div>
+      <div style="font-weight:900; font-size:1.3rem; letter-spacing:-0.5px;">THE HOLLOW REALM</div>
+      <div style="font-size:0.65rem; color:var(--accent); letter-spacing:3px; text-transform:uppercase; margin-top:2px; font-weight:700;">World Bible Console</div>
+    </div>
+    <div class="live-badge">Live System</div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-target="party">👥 Party</div>
+    <div class="tab" data-target="protect">🛡 Protect</div>
+    <div class="tab" data-target="villains">🎭 Villains</div>
+    <div class="tab" data-target="world">🗺 World Arc</div>
+    <div class="tab" data-target="hof">🏆 HOF</div>
+    <div class="tab" data-target="forge">🪆 Forge</div>
+    <div class="tab" data-target="arena">🎲 Arena</div>
+  </div>
+
+  <div style="padding-top:180px; margin-top:-180px; pointer-events:none;"></div>
+
+  <div id="panel-party" class="panel active">
+    <div class="section-title">Active Adventurers</div>
+    <input class="input" id="searchBar" placeholder="Search by character or @user..." oninput="refreshParty()">
+    <div id="partyList"></div>
+  </div>
+
+  <div id="panel-protect" class="panel">
+    <div class="card">
+        <div class="section-title">🛡 Protection Insurance Ledger</div>
+        <div style="font-size:0.75rem; color:var(--dim); margin-bottom:16px;">1,000 coins per session missed. Protects from death and Box Battle targeting while offline.</div>
+        <div id="protectList"></div>
+    </div>
+  </div>
+
+  <div id="panel-villains" class="panel">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <div class="section-title" style="margin:0;">Active Antagonists</div>
+        <button class="btn-sm" style="background:var(--red);" onclick="openVillainModal('new')">+ New Villain</button>
+    </div>
+    <div id="villainList"></div>
+  </div>
+
+  <div id="panel-world" class="panel">
+    <div class="card">
+        <div class="section-title">Current Arc & World State</div>
+        <label class="input-label">Arc Title</label>
+        <input class="input" id="w-title" placeholder="Name of the current arc..." onblur="saveWorld()">
+        
+        <label class="input-label">Primary Antagonist</label>
+        <input class="input" id="w-villain" placeholder="Who is driving the conflict..." onblur="saveWorld()">
+        
+        <label class="input-label">Active Story Thread</label>
+        <textarea class="input" id="w-thread" style="height:100px;" placeholder="What is happening right now..." onblur="saveWorld()"></textarea>
+        
+        <label class="input-label">Global World Events</label>
+        <textarea class="input" id="w-events" style="height:100px;" placeholder="News from the Factions..." onblur="saveWorld()"></textarea>
+        
+        <button class="btn" onclick="saveWorld()">Commit World State</button>
+    </div>
+  </div>
+
+  <div id="panel-hof" class="panel">
+    <div class="card">
+        <div class="section-title">Induct a Legend</div>
+        <label class="input-label">Character Name</label>
+        <input class="input" id="h-name" placeholder="Who is being inducted?">
+        
+        <label class="input-label">Title / Honor</label>
+        <input class="input" id="h-title" placeholder="e.g. The Undying">
+        
+        <label class="input-label">Reason for Induction</label>
+        <select class="input" id="h-reason">
+            <option>Natural 20 on world-changing action</option>
+            <option>Story-defining death</option>
+            <option>Box Battle OP tier (45,000+ coins)</option>
+            <option>Legendary reputation title earned</option>
+            <option>Origin Story episode produced</option>
+            <option>Other legendary moment</option>
+        </select>
+        
+        <label class="input-label">The Legend (Lore Notes)</label>
+        <textarea class="input" id="h-notes" style="height:80px;" placeholder="Describe the moment that cemented their legacy..."></textarea>
+        
+        <button class="btn" style="background:var(--gold); color:#000; border-color:var(--gold);" onclick="addHof()">🏆 Induct to Hall of Fame</button>
+    </div>
+    <div class="section-title">The Hall of Legends</div>
+    <div id="hofList"></div>
+  </div>
+
+  <div id="panel-forge" class="panel">
+    <div class="card">
+      <div class="section-title">Identity</div>
+      <label class="input-label">TikTok Username</label><input class="input" id="f-user" placeholder="@username">
+      <label class="input-label">Lore Name</label><input class="input" id="f-name" placeholder="Character Name">
+      <label class="input-label">Class Path</label>
+      <select class="input" id="f-class">
+        <option value="">Select Path...</option>
+        <option>Warrior</option><option>Wizard</option><option>Rogue</option><option>Healer</option><option>Merchant</option><option>Bard</option>
+      </select>
+      <div class="section-title">Visual Imprinting</div>
+      <div style="display:flex; gap:12px; margin-bottom:12px;">
+        <div style="flex:1;"><label class="btn-sm" style="display:block; text-align:center; padding:12px;">TikTok Pic <input type="file" hidden onchange="handleImage(this, 'user')"></label><img id="prev-user" style="width:100%; height:90px; object-fit:cover; border-radius:12px; margin-top:8px; display:none;"></div>
+        <div style="flex:1;"><label class="btn-sm" style="display:block; text-align:center; padding:12px;">Char Art <input type="file" hidden onchange="handleImage(this, 'char')"></label><img id="prev-char" style="width:100%; height:90px; object-fit:cover; border-radius:12px; margin-top:8px; display:none;"></div>
+      </div>
+      <button class="btn" style="background:linear-gradient(135deg, #6366f1, #a855f7); color:#fff; border:none;" onclick="commitCharacter()">FORGE & COMMIT TO LORE</button>
+    </div>
+  </div>
+
+  <div id="panel-arena" class="panel">
+    <div class="card" style="text-align:center; padding:40px;">
+        <div style="font-size:5rem;" onclick="rollD20()">🎲</div>
+        <div id="rollVal" style="font-size:3rem; font-weight:bold; color:var(--accent); margin-top:10px;">FATE</div>
+    </div>
+    <div class="card">
+        <button class="btn" style="background:var(--red); color:#fff; border:none; margin-top:20px;" onclick="wipeDatabase()">⚠️ NUCLEAR DATABASE WIPE</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="pModal"><div class="modal" id="pModalContent"></div></div>
+  <div class="modal-overlay" id="vModal"><div class="modal" id="vModalContent"></div></div>
+
+  <script>
+    // ════════════════════════════════════════════════════════════
+    // MASTER SCRIPT ENGINE (UNCOMPRESSED ARCHITECTURE)
+    // ════════════════════════════════════════════════════════════
+
+    let state = JSON.parse(localStorage.getItem('HR_WORLD_BIBLE_V2')) || { 
+        players: [], 
+        villains: [], 
+        hof: [], 
+        world: { arcTitle:"", arcVillain:"", arcThread:"", events:"" }, 
+        logs: [] 
+    };
+    
+    let tempUserImg = null, tempCharImg = null;
+
+    // SAVE TO LOCAL STORAGE
+    function save() { 
+        localStorage.setItem('HR_WORLD_BIBLE_V2', JSON.stringify(state)); 
+    }
+
+    // TAB NAVIGATION
+    document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            tab.classList.add('active');
+            const target = tab.getAttribute('data-target');
+            document.getElementById('panel-' + target).classList.add('active');
+            
+            if(target === 'party') refreshParty();
+            if(target === 'protect') renderProtect();
+            if(target === 'villains') renderVillains();
+            if(target === 'world') renderWorld();
+            if(target === 'hof') renderHof();
+        });
+    });
+
+    // ════════════════════════════════════════════════════════════
+    // PARTY SYSTEM
+    // ════════════════════════════════════════════════════════════
+
+    function handleImage(input, type) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const img = new Image();
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = 150; canvas.height = 150;
+                canvas.getContext('2d').drawImage(img, 0, 0, 150, 150);
+                const data = canvas.toDataURL('image/jpeg', 0.7);
+                if(type === 'user') { tempUserImg = data; document.getElementById('prev-user').src = data; document.getElementById('prev-user').style.display = 'block'; }
+                else { tempCharImg = data; document.getElementById('prev-char').src = data; document.getElementById('prev-char').style.display = 'block'; }
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+
+    function commitCharacter() {
+        const user = document.getElementById('f-user').value;
+        const name = document.getElementById('f-name').value;
+        const cls = document.getElementById('f-class').value;
+
+        if(!user || !name || !cls) return alert("You must provide TikTok user, Lore Name, and Class.");
+
+        const p = {
+            id: Date.now(), user, name, cls,
+            hp: 10, maxHp: 10, protectionBalance: 0, isDead: false,
+            userImg: tempUserImg, charImg: tempCharImg,
+            status: "Active", faction: "Unaligned", inv: ""
+        };
+
+        state.players.unshift(p);
+        save();
+        alert(name + " has been written into the Lore.");
+        
+        document.getElementById('f-user').value = ''; document.getElementById('f-name').value = ''; document.getElementById('f-class').value = '';
+        document.getElementById('prev-user').style.display = 'none'; document.getElementById('prev-char').style.display = 'none';
+        tempUserImg = null; tempCharImg = null;
+        refreshParty();
+    }
+
+    function refreshParty() {
+        const s = document.getElementById('searchBar').value.toLowerCase();
+        document.getElementById('partyList').innerHTML = state.players.filter(p => p.name.toLowerCase().includes(s) || p.user.toLowerCase().includes(s)).map(p => {
+            const pct = (p.hp / p.maxHp) * 100;
+            return `
+            <div class="player-card" style="border-color:${p.isDead ? 'var(--red)' : p.protectionBalance > 0 ? 'var(--gold)' : 'var(--border)'}; opacity:${p.isDead ? 0.6 : 1}">
+                <div style="display:flex; align-items:center;">
+                    <div class="avatar-stack">
+                        <div class="avatar-main">${p.charImg ? `<img src="${p.charImg}" style="width:100%;height:100%;border-radius:18px;object-fit:cover;">` : '👤'}</div>
+                        <div class="avatar-sub">${p.userImg ? `<img src="${p.userImg}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">` : '@'}</div>
+                    </div>
+                    <div style="flex:1;">
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                            <div>
+                                <div style="font-weight:900; font-size:1.2rem;">${p.name} ${p.isDead ? '☠️' : ''}</div>
+                                <div style="font-size:0.7rem; color:var(--accent); text-transform:uppercase; letter-spacing:1px;">@${p.user} • ${p.cls}</div>
+                            </div>
+                            <button class="btn-sm" style="border:none; background:transparent; font-size:1rem;" onclick="openPlayerEditor(${p.id})">⚙️</button>
+                        </div>
+                        <div style="font-size:0.65rem; color:var(--dim); margin-top:4px;">${p.status} | ${p.protectionBalance > 0 ? `🛡 Protected (${p.protectionBalance})` : '⚠ Unprotected'}</div>
+                        <div style="margin-top:8px; display:flex; align-items:center; gap:8px;">
+                            <button class="btn-sm" style="border-color:var(--red); color:var(--red);" onclick="adjHp(${p.id}, -1)">-</button>
+                            <div style="flex:1;" class="hp-bar"><div class="hp-fill" style="width:${pct}%; background:${pct > 40 ? 'var(--green)' : 'var(--red)'}"></div></div>
+                            <div style="font-size:0.75rem; font-weight:bold; color:var(--text);">${p.hp}/${p.maxHp}</div>
+                            <button class="btn-sm" style="border-color:var(--green); color:var(--green);" onclick="adjHp(${p.id}, 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+        }).join('');
+    }
+
+    function adjHp(id, d) {
+        const p = state.players.find(x => x.id === id);
+        p.hp = Math.max(0, Math.min(p.maxHp, p.hp + d));
+        save(); refreshParty();
+    }
+
+    function openPlayerEditor(id) {
+        const p = state.players.find(x => x.id === id);
+        document.getElementById('pModalContent').innerHTML = `
+            <div class="section-title">Edit: ${p.name}</div>
+            <label class="input-label">Current Status</label><input class="input" id="ep-status" value="${p.status}">
+            <label class="input-label">Max HP</label><input type="number" class="input" id="ep-mhp" value="${p.maxHp}">
+            <label class="input-label">Inventory & Notes</label><textarea class="input" id="ep-inv" style="height:100px;">${p.inv}</textarea>
+            
+            <div style="display:flex; gap:10px; margin-top:10px;">
+                <button class="btn" style="background:var(--gold); border-color:var(--gold); color:#000;" onclick="toggleDeath(${p.id})">${p.isDead ? "⚗️ Resurrect" : "☠️ Mark Dead"}</button>
+            </div>
+            
+            <button class="btn" style="margin-top:10px;" onclick="savePlayer(${p.id})">Save Changes</button>
+            <button class="btn-sm" style="width:100%; margin-top:10px;" onclick="closeModals()">Cancel</button>
+        `;
+        document.getElementById('pModal').classList.add('open');
+    }
+
+    function savePlayer(id) {
+        const p = state.players.find(x => x.id === id);
+        p.status = document.getElementById('ep-status').value;
+        p.maxHp = parseInt(document.getElementById('ep-mhp').value);
+        if(p.hp > p.maxHp) p.hp = p.maxHp;
+        p.inv = document.getElementById('ep-inv').value;
+        save(); closeModals(); refreshParty();
+    }
+
+    function toggleDeath(id) {
+        const p = state.players.find(x => x.id === id);
+        p.isDead = !p.isDead;
+        p.hp = p.isDead ? 0 : p.maxHp;
+        save(); closeModals(); refreshParty();
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // PROTECTION LEDGER
+    // ════════════════════════════════════════════════════════════
+    function renderProtect() {
+        const list = document.getElementById('protectList');
+        const activePlayers = state.players.filter(p => !p.isDead);
+        
+        if (activePlayers.length === 0) {
+            list.innerHTML = `<div style="text-align:center; color:var(--dim); padding:40px;">No living adventurers to protect.</div>`;
+            return;
+        }
+
+        list.innerHTML = activePlayers.map(p => `
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--border);">
+                <div>
+                    <div style="font-weight:bold; font-size:0.9rem; color:#fff;">${p.name}</div>
+                    <div style="font-size:0.65rem; color:var(--dim);">@${p.user}</div>
+                </div>
+                <div style="text-align:right;">
+                    <div style="font-weight:bold; font-size:0.9rem; color:${p.protectionBalance > 0 ? 'var(--gold)' : 'var(--dim)'};">${p.protectionBalance > 0 ? `🛡 ${p.protectionBalance.toLocaleString()}` : '⚠ 0'}</div>
+                    <div style="display:flex; gap:5px; margin-top:4px;">
+                        <button class="btn-sm" style="background:rgba(239,83,80,0.2); color:var(--red); border-color:var(--red); padding:4px 8px;" onclick="adjProtect(${p.id}, -1000)">-1k</button>
+                        <button class="btn-sm" style="background:rgba(251,191,36,0.2); color:var(--gold); border-color:var(--gold); padding:4px 8px;" onclick="adjProtect(${p.id}, 1000)">+1k</button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function adjProtect(id, amount) {
+        const p = state.players.find(x => x.id === id);
+        p.protectionBalance = Math.max(0, (p.protectionBalance || 0) + amount);
+        save(); renderProtect();
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // VILLAIN TRACKER
+    // ════════════════════════════════════════════════════════════
+    function renderVillains() {
+        const list = document.getElementById('villainList');
+        if (!state.villains || state.villains.length === 0) {
+            list.innerHTML = `<div style="text-align:center; color:var(--dim); padding:40px;">No active antagonists. The Realm is quiet.</div>`;
+            return;
+        }
+
+        list.innerHTML = state.villains.map(v => {
+            const hpPct = Math.max(0, (v.hp / v.maxHp) * 100);
+            return `
+            <div class="villain-card">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                    <div>
+                        <div style="font-weight:900; font-size:1.2rem; color:var(--red);">${v.name}</div>
+                        <div style="font-size:0.7rem; color:var(--dim); text-transform:uppercase; letter-spacing:1px;">${v.title}</div>
+                    </div>
+                    <div style="text-align:right;">
+                        <span class="phase-badge" style="color:var(--purple); border-color:var(--purple); background:rgba(167,139,250,0.1);">Phase ${v.phase}</span>
+                    </div>
+                </div>
+                
+                <div style="margin:12px 0;">
+                    <div style="display:flex; justify-content:space-between; font-size:0.7rem; color:var(--dim); margin-bottom:4px;"><span>Threat HP</span><span style="color:#fff; font-weight:bold;">${v.hp} / ${v.maxHp}</span></div>
+                    <div class="hp-bar"><div class="hp-fill" style="width:${hpPct}%; background:var(--red); box-shadow:0 0 10px var(--red);"></div></div>
+                </div>
+
+                <div style="display:flex; gap:6px; margin-bottom:12px;">
+                    <button class="btn-sm" style="background:rgba(239,83,80,0.2); color:var(--red); border-color:var(--red);" onclick="adjVillainHp(${v.id}, -10)">-10 DMG</button>
+                    <div style="flex:1;"></div>
+                    <button class="btn-sm" style="background:rgba(52,211,153,0.2); color:var(--green); border-color:var(--green);" onclick="adjVillainHp(${v.id}, 10)">+10 HEAL</button>
+                </div>
+
+                <div style="background:rgba(0,0,0,0.4); padding:10px; border-radius:8px; border:1px solid var(--border); font-size:0.75rem; color:var(--dim);">
+                    <div><strong style="color:var(--accent);">Motivation:</strong> ${v.motivation}</div>
+                    <div style="margin-top:6px;"><strong style="color:var(--gold);">Weakness:</strong> ${v.weakness}</div>
+                </div>
+
+                <button class="btn-sm" style="width:100%; margin-top:12px; background:rgba(125,150,255,0.1); color:var(--accent); border-color:var(--accent);" onclick="openVillainModal(${v.id})">Update Villain Intel</button>
+            </div>`;
+        }).join('');
+    }
+
+    function adjVillainHp(id, d) {
+        const v = state.villains.find(x => x.id === id);
+        v.hp = Math.max(0, Math.min(v.maxHp, v.hp + d));
+        save(); renderVillains();
+    }
+
+    function openVillainModal(id) {
+        const isNew = id === 'new';
+        const v = isNew ? { name:"", title:"", maxHp:200, hp:200, phase:1, motivation:"", weakness:"" } : state.villains.find(x => x.id === id);
+        
+        document.getElementById('vModalContent').innerHTML = `
+            <div class="section-title">${isNew ? "Spawn New Antagonist" : "Edit Antagonist"}</div>
+            
+            <label class="input-label">Villain Name</label>
+            <input class="input" id="v-name" value="${v.name}" placeholder="e.g. The Unseen Warden">
+            
+            <label class="input-label">Epithet / Title</label>
+            <input class="input" id="v-title" value="${v.title}" placeholder="e.g. Lord of the Caverns">
+            
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                <div><label class="input-label">Max HP</label><input type="number" class="input" id="v-mhp" value="${v.maxHp}"></div>
+                <div><label class="input-label">Current Phase</label><input type="number" class="input" id="v-phase" value="${v.phase}"></div>
+            </div>
+
+            <label class="input-label">Motivation & Goals</label>
+            <textarea class="input" id="v-mot" style="height:80px;">${v.motivation}</textarea>
+            
+            <label class="input-label">Known Weakness</label>
+            <input class="input" id="v-weak" value="${v.weakness}" placeholder="What stops them?">
+
+            <button class="btn" style="background:var(--red); color:#fff; border-color:var(--red); margin-top:10px;" onclick="saveVillain(${isNew ? null : id})">Commit Antagonist</button>
+            ${!isNew ? `<button class="btn-sm" style="width:100%; margin-top:10px; background:rgba(239,83,80,0.2); color:var(--red);" onclick="delVillain(${id})">Destroy Villain (Remove)</button>` : ''}
+            <button class="btn-sm" style="width:100%; margin-top:10px;" onclick="closeModals()">Cancel</button>
+        `;
+        document.getElementById('vModal').classList.add('open');
+    }
+
+    function saveVillain(id) {
+        const v = {
+            id: id || Date.now(),
+            name: document.getElementById('v-name').value,
+            title: document.getElementById('v-title').value,
+            maxHp: parseInt(document.getElementById('v-mhp').value),
+            hp: id ? state.villains.find(x=>x.id===id).hp : parseInt(document.getElementById('v-mhp').value), // Keep current HP if editing, otherwise full
+            phase: parseInt(document.getElementById('v-phase').value),
+            motivation: document.getElementById('v-mot').value,
+            weakness: document.getElementById('v-weak').value
+        };
+
+        if(id) { const idx = state.villains.findIndex(x => x.id === id); state.villains[idx] = v; }
+        else { state.villains.unshift(v); }
+        
+        save(); closeModals(); renderVillains();
+    }
+
+    function delVillain(id) {
+        if(confirm("Remove this villain from the tracker permanently?")) {
+            state.villains = state.villains.filter(x => x.id !== id);
+            save(); closeModals(); renderVillains();
+        }
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // WORLD ARC BOARD
+    // ════════════════════════════════════════════════════════════
+    function renderWorld() {
+        document.getElementById('w-title').value = state.world.arcTitle || "";
+        document.getElementById('w-villain').value = state.world.arcVillain || "";
+        document.getElementById('w-thread').value = state.world.arcThread || "";
+        document.getElementById('w-events').value = state.world.events || "";
+    }
+
+    function saveWorld() {
+        state.world = {
+            arcTitle: document.getElementById('w-title').value,
+            arcVillain: document.getElementById('w-villain').value,
+            arcThread: document.getElementById('w-thread').value,
+            events: document.getElementById('w-events').value
+        };
+        save();
+        // Visual feedback
+        const btn = event.target;
+        if(btn.tagName === 'BUTTON') {
+            const original = btn.innerText;
+            btn.innerText = "✓ Saved";
+            btn.style.background = "var(--green)";
+            setTimeout(() => { btn.innerText = original; btn.style.background = "rgba(129, 140, 248, 0.2)"; }, 1500);
+        }
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // HALL OF FAME
+    // ════════════════════════════════════════════════════════════
+    function renderHof() {
+        const list = document.getElementById('hofList');
+        if (!state.hof || state.hof.length === 0) {
+            list.innerHTML = `<div style="text-align:center; color:var(--dim); padding:40px;">No legends inducted yet.</div>`;
+            return;
+        }
+
+        list.innerHTML = state.hof.map(h => `
+            <div class="hof-card">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                    <div>
+                        <div style="font-weight:900; font-size:1.3rem; color:var(--gold);">🏆 ${h.name}</div>
+                        <div style="font-size:0.75rem; color:var(--text); font-style:italic;">${h.title}</div>
+                    </div>
+                    <div style="font-size:0.6rem; color:var(--dim);">${h.date}</div>
+                </div>
+                <div style="margin-top:12px; font-size:0.7rem; color:var(--accent); text-transform:uppercase; font-weight:bold;">${h.reason}</div>
+                <div style="margin-top:4px; font-size:0.8rem; color:var(--dim); line-height:1.6;">${h.notes}</div>
+                <button class="btn-sm" style="margin-top:12px; background:transparent; border:none; color:var(--red); text-decoration:underline; font-size:0.6rem; padding:0;" onclick="removeHof(${h.id})">Remove from Hall</button>
+            </div>
+        `).join('');
+    }
+
+    function addHof() {
+        const name = document.getElementById('h-name').value;
+        const title = document.getElementById('h-title').value;
+        const reason = document.getElementById('h-reason').value;
+        const notes = document.getElementById('h-notes').value;
+
+        if(!name) return alert("You must provide a name to induct.");
+
+        state.hof.unshift({ id: Date.now(), name, title, reason, notes, date: new Date().toLocaleDateString() });
+        save();
+        
+        document.getElementById('h-name').value = ''; document.getElementById('h-title').value = ''; document.getElementById('h-notes').value = '';
+        renderHof();
+    }
+
+    function removeHof(id) {
+        if(confirm("Revoke this induction?")) {
+            state.hof = state.hof.filter(x => x.id !== id);
+            save(); renderHof();
+        }
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // UTILITIES
+    // ════════════════════════════════════════════════════════════
+    function closeModals() { document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('open')); }
+    function rollD20() { document.getElementById('rollVal').innerText = "FATE: " + (Math.floor(Math.random() * 20) + 1); }
+    function wipeDatabase() { if(confirm("WARNING: THIS ERASES EVERY PLAYER, VILLAIN, AND NOTE. PROCEED?")) { localStorage.clear(); location.reload(); } }
+
+    // Init
+    refreshParty(); renderWorld(); renderProtect(); renderVillains(); renderHof();
+  </script>
+</body>
+</html>
