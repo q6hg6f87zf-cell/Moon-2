@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>THE HOLLOW REALM: WORLD BIBLE</title>
+  <title>THE HOLLOW REALM: ABSOLUTE BIBLE</title>
   
   <style>
     :root {
-      --bg: #02040a; --surface: rgba(13, 17, 30, 0.45); --card: rgba(20, 25, 45, 0.55);
-      --border: rgba(125, 150, 255, 0.15); --border-glow: rgba(125, 170, 255, 0.4);
-      --accent: #818cf8; --gold: #fbbf24; --red: #f87171; --green: #34d399; --purple: #a78bfa;
+      --bg: #02040a; --surface: rgba(13, 17, 30, 0.45); --card: rgba(20, 25, 45, 0.6);
+      --border: rgba(138, 90, 220, 0.25); --border-glow: rgba(138, 90, 220, 0.6);
+      --accent: #818cf8; --gold: #fbbf24; --red: #ef5350; --green: #66bb6a; --purple: #a78bfa;
       --text: #f8fafc; --dim: #94a3b8;
     }
 
@@ -20,54 +20,47 @@
 
     /* --- LIQUID UI --- */
     .header-img { width: 100%; height: 220px; object-fit: cover; object-position: center top; -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%); position: absolute; top: 0; left: 0; z-index: 0; }
-    .header-glass { background: rgba(2, 4, 10, 0.3); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); padding: 24px 16px 16px; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .header-glass { background: rgba(8, 6, 25, 0.97); backdrop-filter: blur(15px); padding: 24px 16px 16px; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-glow); display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 20px rgba(138,90,220,0.3); }
     .live-badge { background: rgba(251, 191, 36, 0.15); border: 1px solid var(--gold); color: var(--gold); font-size: 0.65rem; font-weight: 800; padding: 4px 14px; border-radius: 20px; letter-spacing: 2px; text-transform: uppercase; animation: pulse 2s infinite; }
     
     @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
 
-    .tabs { display: flex; background: rgba(10, 15, 30, 0.8); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; padding: 6px 10px; position: sticky; top: 72px; z-index: 999; }
+    .tabs { display: flex; background: rgba(8, 6, 25, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; padding: 6px 10px; position: sticky; top: 76px; z-index: 999; }
     .tabs::-webkit-scrollbar { display: none; }
-    .tab { padding: 12px 18px; font-size: 0.75rem; font-weight: 700; color: var(--dim); cursor: pointer; white-space: nowrap; border-radius: 20px; margin: 4px; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid transparent; flex-shrink: 0; }
-    .tab.active { color: #fff; background: rgba(129, 140, 248, 0.25); border-color: rgba(129, 140, 248, 0.4); box-shadow: 0 0 15px rgba(129, 140, 248, 0.2); }
+    .tab { padding: 12px 18px; font-size: 0.75rem; font-weight: 700; color: var(--dim); cursor: pointer; white-space: nowrap; border-radius: 20px; margin: 4px; transition: 0.3s; border: 1px solid transparent; flex-shrink: 0; }
+    .tab.active { color: #fff; background: rgba(138, 90, 220, 0.15); border-color: rgba(138, 90, 220, 0.4); box-shadow: 0 0 15px rgba(138, 90, 220, 0.2); }
 
     .panel { display: none; padding: 20px 16px 120px; position: relative; z-index: 10; max-width: 800px; margin: 0 auto; }
-    .panel.active { display: block; animation: slideUp 0.4s ease-out; }
-    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .panel.active { display: block; animation: slideUp 0.3s ease-out; }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* --- CARDS & BLOCKS --- */
-    .card { background: var(--card); backdrop-filter: blur(16px); border: 1px solid var(--border); border-radius: 20px; padding: 20px; margin-bottom: 20px; position: relative; overflow: hidden; }
-    .card::before { content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent); opacity: 0.5; }
-    .section-title { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .card { background: var(--card); backdrop-filter: blur(16px); border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+    .section-title { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--purple); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
     .section-title::after { content: ""; flex: 1; height: 1px; background: var(--border); }
 
     /* --- INPUTS --- */
     .input-label { display: block; font-size: 0.7rem; font-weight: 700; color: var(--dim); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; }
-    .input { width: 100%; padding: 14px 16px; background: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: 14px; color: var(--text); font-size: 0.95rem; outline: none; transition: 0.2s; margin-bottom: 16px; -webkit-appearance: none; }
-    .input:focus { border-color: var(--accent); background: rgba(0,0,0,0.6); box-shadow: 0 0 15px rgba(129,140,248,0.1); }
+    .input { width: 100%; padding: 14px 16px; background: rgba(10,8,30,0.8); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-size: 0.95rem; outline: none; transition: 0.2s; margin-bottom: 16px; }
+    .input:focus { border-color: var(--purple); box-shadow: 0 0 15px rgba(138,90,220,0.2); }
     select.input option { background: #0a0f1e; color: #fff; }
     
-    .btn { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--accent); background: rgba(129, 140, 248, 0.2); color: var(--accent); font-weight: 700; cursor: pointer; text-align: center; margin-bottom: 10px; }
-    .btn-sm { padding: 6px 12px; border-radius: 8px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); color: #fff; font-size: 0.7rem; cursor: pointer; }
+    .btn { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--purple); background: rgba(138,90,220,0.2); color: #fff; font-weight: 700; cursor: pointer; text-align: center; margin-bottom: 10px; }
+    .btn-sm { padding: 6px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: #fff; font-size: 0.7rem; cursor: pointer; font-weight: 600; }
 
-    /* --- PLAYER UI --- */
-    .player-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 16px; margin-bottom: 14px; transition: 0.3s; }
-    .avatar-stack { position: relative; width: 70px; height: 70px; margin-right: 16px; }
-    .avatar-main { width: 70px; height: 70px; border-radius: 18px; object-fit: cover; border: 1px solid var(--border); background: #0a0f1e; }
-    .avatar-sub { position: absolute; bottom: -6px; right: -6px; width: 32px; height: 32px; border-radius: 50%; border: 3px solid var(--bg); object-fit: cover; background: #1a2035; }
+    /* --- UI ELEMENTS --- */
+    .avatar-stack { position: relative; width: 70px; height: 70px; margin-right: 16px; flex-shrink: 0; }
+    .avatar-main { width: 70px; height: 70px; border-radius: 18px; object-fit: cover; border: 1px solid var(--border); background: #0a0f1e; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; overflow: hidden; }
+    .avatar-sub { position: absolute; bottom: -6px; right: -6px; width: 32px; height: 32px; border-radius: 50%; border: 3px solid var(--bg); object-fit: cover; background: #1a2035; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; overflow: hidden; }
+
     .hp-bar { height: 6px; background: rgba(0,0,0,0.5); border-radius: 3px; overflow: hidden; margin-top: 4px; }
     .hp-fill { height: 100%; transition: width 0.3s ease; }
+    .tag { font-size: 0.6rem; padding: 3px 8px; border-radius: 10px; font-weight: 700; background: rgba(255,255,255,0.1); }
 
-    /* --- VILLAINS & HOF --- */
-    .villain-card { background: rgba(20,8,8,0.6); border: 1px solid rgba(239,83,80,0.4); border-radius: 16px; padding: 16px; margin-bottom: 14px; }
-    .hof-card { background: rgba(30,25,5,0.6); border: 1px solid rgba(255,213,79,0.4); border-radius: 16px; padding: 16px; margin-bottom: 14px; box-shadow: 0 0 20px rgba(255,213,79,0.1); }
-    .phase-badge { font-size: 0.6rem; padding: 3px 8px; border-radius: 6px; font-weight: 800; text-transform: uppercase; margin-right: 5px; border: 1px solid currentColor; }
-
-    /* --- MODALS --- */
-    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 1000; padding: 20px; align-items: center; justify-content: center; }
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 2000; padding: 20px; align-items: center; justify-content: center; }
     .modal-overlay.open { display: flex; }
-    .modal { background: var(--bg); border: 1px solid var(--border-glow); border-radius: 24px; width: 100%; max-width: 450px; padding: 24px; max-height: 85vh; overflow-y: auto; }
+    .modal { background: var(--bg); border: 1px solid var(--border-glow); border-radius: 20px; width: 100%; max-width: 500px; padding: 24px; max-height: 85vh; overflow-y: auto; }
 
-    .ripple { position: fixed; width: 80px; height: 80px; margin-left: -40px; margin-top: -40px; background: radial-gradient(circle, rgba(129, 140, 248, 0.4) 0%, rgba(129, 140, 248, 0) 70%); border-radius: 50%; pointer-events: none; z-index: 9999; animation: rippleAnim 0.7s ease-out forwards; }
+    .ripple { position: fixed; width: 80px; height: 80px; margin-left: -40px; margin-top: -40px; background: radial-gradient(circle, rgba(138, 90, 220, 0.4) 0%, rgba(138, 90, 220, 0) 70%); border-radius: 50%; pointer-events: none; z-index: 9999; animation: rippleAnim 0.7s ease-out forwards; }
     @keyframes rippleAnim { 0% { transform: scale(0.3); opacity: 1; } 100% { transform: scale(3); opacity: 0; } }
   </style>
 </head>
@@ -85,34 +78,189 @@
   <img src="IMG_5131.png" class="header-img" onerror="this.style.display='none'">
   <div class="header-glass">
     <div>
-      <div style="font-weight:900; font-size:1.3rem; letter-spacing:-0.5px;">THE HOLLOW REALM</div>
-      <div style="font-size:0.65rem; color:var(--accent); letter-spacing:3px; text-transform:uppercase; margin-top:2px; font-weight:700;">World Bible Console</div>
+      <div style="font-weight:900; font-size:1.2rem; letter-spacing:1px;">THE HOLLOW REALM</div>
+      <div style="font-size:0.65rem; color:var(--purple); letter-spacing:3px; text-transform:uppercase; margin-top:2px; font-weight:800;">World Bible Console 1.0</div>
     </div>
     <div class="live-badge">Live System</div>
   </div>
 
   <div class="tabs">
     <div class="tab active" data-target="party">👥 Party</div>
-    <div class="tab" data-target="protect">🛡 Protect</div>
-    <div class="tab" data-target="villains">🎭 Villains</div>
-    <div class="tab" data-target="world">🗺 World Arc</div>
-    <div class="tab" data-target="hof">🏆 HOF</div>
     <div class="tab" data-target="forge">🪆 Forge</div>
     <div class="tab" data-target="arena">🎲 Arena</div>
+    <div class="tab" data-target="ledger">📋 Ledger</div>
+    <div class="tab" data-target="classes">🧙 Classes</div>
+    <div class="tab" data-target="arsenal">🗡 Arsenal</div>
+    <div class="tab" data-target="ref">📖 Ref</div>
+    <div class="tab" data-target="protect">🛡 Protect</div>
+    <div class="tab" data-target="villains">🎭 Villains</div>
+    <div class="tab" data-target="world">🗺 World</div>
+    <div class="tab" data-target="npcs">👁 NPCs</div>
+    <div class="tab" data-target="hof">🏆 HOF</div>
+    <div class="tab" data-target="rules">📜 Rules</div>
+    <div class="tab" data-target="wrapup">📝 Wrap</div>
   </div>
 
   <div style="padding-top:180px; margin-top:-180px; pointer-events:none;"></div>
 
   <div id="panel-party" class="panel active">
     <div class="section-title">Active Adventurers</div>
-    <input class="input" id="searchBar" placeholder="Search by character or @user..." oninput="refreshParty()">
+    <input class="input" id="searchBar" placeholder="Search characters or @users..." oninput="renderParty()">
     <div id="partyList"></div>
+  </div>
+
+  <div id="panel-forge" class="panel">
+    <div class="card">
+      <div class="section-title">Forge Identity</div>
+      <label class="input-label">TikTok Username</label><input class="input" id="f-user" placeholder="@username">
+      <label class="input-label">Lore Name</label>
+      <select class="input" id="f-name" onchange="document.getElementById('f-custom').style.display=(this.value==='CUSTOM')?'block':'none'">
+        <option value="">— Select Retiring Name —</option>
+        <option>Alden</option><option>Valerius</option><option>Serana</option><option>Kaelen</option><option>Torbjorn</option>
+        <option>Elara</option><option>Fenris</option><option>Isolde</option><option>Gideon</option><option>Vael</option>
+        <option>Nyx</option><option>Draven</option><option>Soren</option><option>Lyra</option><option>Thorne</option>
+        <option>Vanya</option><option>Elias</option><option>Rurik</option><option>Sylas</option><option>Aric</option>
+        <option value="CUSTOM">✦ Custom Name...</option>
+      </select>
+      <input class="input" id="f-custom" placeholder="Type Custom Name..." style="display:none; margin-top:-8px;">
+      
+      <label class="input-label">Class Path</label>
+      <select class="input" id="f-class" onchange="runForgePreview()">
+        <option value="">— Select Class —</option>
+        <option>Warrior</option><option>Wizard</option><option>Rogue</option>
+        <option>Healer</option><option>Merchant</option><option>Bard</option>
+      </select>
+
+      <div class="section-title" style="margin-top:20px;">Visuals</div>
+      <div style="display:flex; gap:12px; margin-bottom:20px;">
+        <div style="flex:1;">
+            <label class="btn-sm" style="display:block; text-align:center; padding:12px; border:1px dashed var(--purple); color:var(--purple);">Upload TikTok Pic <input type="file" hidden onchange="handleImage(this, 'user')"></label>
+            <img id="prev-user" style="width:100%; height:90px; object-fit:cover; border-radius:12px; margin-top:8px; display:none; border:1px solid var(--border);">
+        </div>
+        <div style="flex:1;">
+            <label class="btn-sm" style="display:block; text-align:center; padding:12px; border:1px dashed var(--gold); color:var(--gold);">Upload Char Art <input type="file" hidden onchange="handleImage(this, 'char')"></label>
+            <img id="prev-char" style="width:100%; height:90px; object-fit:cover; border-radius:12px; margin-top:8px; display:none; border:1px solid var(--border);">
+        </div>
+      </div>
+
+      <div class="section-title">The Seven Rolls (1-20)</div>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+        <div style="background:rgba(0,0,0,0.3); padding:10px; border-radius:10px; border:1px solid var(--border);">
+            <label class="input-label">1. Reputation</label>
+            <div style="display:flex; gap:5px;"><input type="number" id="r-rep" class="input" style="margin:0;" oninput="runForgePreview()"><button class="btn-sm" onclick="rollField('r-rep')">🎲</button></div>
+            <div id="prev-rep" style="font-size:0.65rem; color:var(--gold); margin-top:5px; height:12px;"></div>
+        </div>
+        <div style="background:rgba(0,0,0,0.3); padding:10px; border-radius:10px; border:1px solid var(--border);">
+            <label class="input-label">2. Trait</label>
+            <div style="display:flex; gap:5px;"><input type="number" id="r-trait" class="input" style="margin:0;" oninput="runForgePreview()"><button class="btn-sm" onclick="rollField('r-trait')">🎲</button></div>
+            <div id="prev-trait" style="font-size:0.65rem; color:var(--gold); margin-top:5px; height:12px;"></div>
+        </div>
+        <div style="background:rgba(0,0,0,0.3); padding:10px; border-radius:10px; border:1px solid var(--border);">
+            <label class="input-label">3. Weapon</label>
+            <div style="display:flex; gap:5px;"><input type="number" id="r-wpn" class="input" style="margin:0;" oninput="runForgePreview()"><button class="btn-sm" onclick="rollField('r-wpn')">🎲</button></div>
+            <div id="prev-wpn" style="font-size:0.65rem; color:var(--gold); margin-top:5px; height:12px;"></div>
+        </div>
+        <div style="background:rgba(0,0,0,0.3); padding:10px; border-radius:10px; border:1px solid var(--border);">
+            <label class="input-label">4. Skill</label>
+            <div style="display:flex; gap:5px;"><input type="number" id="r-skill" class="input" style="margin:0;" oninput="runForgePreview()"><button class="btn-sm" onclick="rollField('r-skill')">🎲</button></div>
+            <div id="prev-skill" style="font-size:0.65rem; color:var(--gold); margin-top:5px; height:12px;"></div>
+        </div>
+        <div style="background:rgba(0,0,0,0.3); padding:10px; border-radius:10px; border:1px solid var(--border);">
+            <label class="input-label">5. Shadow</label>
+            <div style="display:flex; gap:5px;"><input type="number" id="r-shad" class="input" style="margin:0;" oninput="runForgePreview()"><button class="btn-sm" onclick="rollField('r-shad')">🎲</button></div>
+            <div id="prev-shad" style="font-size:0.65rem; color:var(--gold); margin-top:5px; height:12px;"></div>
+        </div>
+        <div style="background:rgba(0,0,0,0.3); padding:10px; border-radius:10px; border:1px solid var(--border);">
+            <label class="input-label">6. Enchant</label>
+            <div style="display:flex; gap:5px;"><input type="number" id="r-ench" class="input" style="margin:0;" oninput="runForgePreview()"><button class="btn-sm" onclick="rollField('r-ench')">🎲</button></div>
+            <div id="prev-ench" style="font-size:0.65rem; color:var(--gold); margin-top:5px; height:12px;"></div>
+        </div>
+        <div style="grid-column: span 2; background:rgba(0,0,0,0.3); padding:10px; border-radius:10px; border:1px solid var(--border);">
+            <label class="input-label">7. Destiny Thread</label>
+            <div style="display:flex; gap:5px;"><input type="number" id="r-dest" class="input" style="margin:0;" oninput="runForgePreview()"><button class="btn-sm" onclick="rollField('r-dest')">🎲</button></div>
+            <div id="prev-dest" style="font-size:0.65rem; color:var(--gold); margin-top:5px; height:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"></div>
+        </div>
+      </div>
+      <button class="btn" style="background:linear-gradient(135deg, #6366f1, #a855f7); border:none; margin-top:20px; font-size:1rem; padding:16px;" onclick="forgeCharacter()">FORGE & COMMIT TO LORE</button>
+    </div>
+  </div>
+
+  <div id="panel-arena" class="panel">
+    <div class="card" style="text-align:center; padding:40px 20px;">
+        <div style="font-size:5rem;" onclick="rollD20()">🎲</div>
+        <div id="rollVal" style="font-size:3rem; font-weight:bold; color:var(--purple); margin-top:10px;">FATE</div>
+        <div id="rollDesc" style="font-size:1rem; color:var(--dim); margin-top:5px; height:20px;"></div>
+        <button class="btn" style="margin-top:20px;" onclick="rollD20()">ROLL D20</button>
+    </div>
+    
+    <div class="card">
+      <div class="section-title" style="color:var(--gold);">⚔️ Box Battle Finalization</div>
+      <div style="display:flex; gap:10px; margin-bottom:12px;">
+        <div style="flex:1;">
+          <input class="input" id="b-p1" placeholder="Player 1" style="margin-bottom:6px;">
+          <input class="input" id="b-c1" type="number" placeholder="Final Coins" style="margin:0; color:var(--gold);">
+        </div>
+        <div style="display:flex; align-items:center; font-weight:bold; color:var(--accent);">VS</div>
+        <div style="flex:1;">
+          <input class="input" id="b-p2" placeholder="Player 2" style="margin-bottom:6px;">
+          <input class="input" id="b-c2" type="number" placeholder="Final Coins" style="margin:0; color:var(--gold);">
+        </div>
+      </div>
+      <button class="btn" style="border-color:var(--gold); color:var(--gold); background:rgba(251, 191, 36, 0.1);" onclick="logBattle()">Commit Battle Result</button>
+    </div>
+  </div>
+
+  <div id="panel-ledger" class="panel">
+    <div class="card">
+        <div class="section-title">⚔️ Box Battle Records</div>
+        <div id="battleHistoryList"></div>
+    </div>
+    <div class="card">
+        <div class="section-title">📜 Live Action Feed</div>
+        <div id="actionFeedList" style="max-height:400px; overflow-y:auto; border:1px solid var(--border); padding:10px; border-radius:10px; background:rgba(0,0,0,0.3);"></div>
+    </div>
+  </div>
+
+  <div id="panel-classes" class="panel">
+    <div style="display:flex; gap:6px; overflow-x:auto; padding-bottom:10px; margin-bottom:10px; scrollbar-width:none;">
+        <button class="btn-sm" onclick="renderClassLore('Warrior')" style="flex-shrink:0;">⚔️ Warrior</button>
+        <button class="btn-sm" onclick="renderClassLore('Wizard')" style="flex-shrink:0;">🔮 Wizard</button>
+        <button class="btn-sm" onclick="renderClassLore('Rogue')" style="flex-shrink:0;">🗡️ Rogue</button>
+        <button class="btn-sm" onclick="renderClassLore('Healer')" style="flex-shrink:0;">💚 Healer</button>
+        <button class="btn-sm" onclick="renderClassLore('Merchant')" style="flex-shrink:0;">💰 Merchant</button>
+        <button class="btn-sm" onclick="renderClassLore('Bard')" style="flex-shrink:0;">🎵 Bard</button>
+    </div>
+    <div id="classLoreDisplay"></div>
+  </div>
+
+  <div id="panel-arsenal" class="panel">
+    <div class="card">
+        <div class="section-title">The Master Armory</div>
+        <select class="input" id="arsenalFilter" onchange="renderArsenal()">
+            <option>Warrior</option><option>Wizard</option><option>Rogue</option><option>Healer</option><option>Merchant</option><option>Bard</option>
+        </select>
+        <div id="arsenalDisplay"></div>
+    </div>
+  </div>
+
+  <div id="panel-ref" class="panel">
+    <div class="card">
+        <div class="section-title">Coin & Gift Breakdown</div>
+        <div id="refGiftsList"></div>
+    </div>
+    <div class="card">
+        <div class="section-title">Origin Roll Tables</div>
+        <select class="input" id="refTableFilter" onchange="renderRefTables()">
+            <option>Warrior</option><option>Wizard</option><option>Rogue</option><option>Healer</option><option>Merchant</option><option>Bard</option>
+        </select>
+        <div id="refTablesDisplay"></div>
+    </div>
   </div>
 
   <div id="panel-protect" class="panel">
     <div class="card">
         <div class="section-title">🛡 Protection Insurance Ledger</div>
-        <div style="font-size:0.75rem; color:var(--dim); margin-bottom:16px;">1,000 coins per session missed. Protects from death and Box Battle targeting while offline.</div>
+        <div style="font-size:0.75rem; color:var(--dim); margin-bottom:16px;">1,000 coins/session missed. Protects from death and Box Battle targeting while offline.</div>
         <div id="protectList"></div>
     </div>
   </div>
@@ -120,7 +268,7 @@
   <div id="panel-villains" class="panel">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
         <div class="section-title" style="margin:0;">Active Antagonists</div>
-        <button class="btn-sm" style="background:var(--red);" onclick="openVillainModal('new')">+ New Villain</button>
+        <button class="btn-sm" style="background:var(--red);" onclick="openVillainEditor('new')">+ New Villain</button>
     </div>
     <div id="villainList"></div>
   </div>
@@ -128,70 +276,126 @@
   <div id="panel-world" class="panel">
     <div class="card">
         <div class="section-title">Current Arc & World State</div>
-        <label class="input-label">Arc Title</label>
-        <input class="input" id="w-title" placeholder="Name of the current arc..." onblur="saveWorld()">
-        
-        <label class="input-label">Primary Antagonist</label>
-        <input class="input" id="w-villain" placeholder="Who is driving the conflict..." onblur="saveWorld()">
-        
-        <label class="input-label">Active Story Thread</label>
-        <textarea class="input" id="w-thread" style="height:100px;" placeholder="What is happening right now..." onblur="saveWorld()"></textarea>
-        
-        <label class="input-label">Global World Events</label>
-        <textarea class="input" id="w-events" style="height:100px;" placeholder="News from the Factions..." onblur="saveWorld()"></textarea>
-        
+        <label class="input-label">Arc Title</label><input class="input" id="w-title" onblur="saveWorld()">
+        <label class="input-label">Primary Antagonist</label><input class="input" id="w-villain" onblur="saveWorld()">
+        <label class="input-label">Active Story Thread</label><textarea class="input" id="w-thread" style="height:100px;" onblur="saveWorld()"></textarea>
+        <label class="input-label">Global World Events</label><textarea class="input" id="w-events" style="height:100px;" onblur="saveWorld()"></textarea>
         <button class="btn" onclick="saveWorld()">Commit World State</button>
     </div>
+  </div>
+
+  <div id="panel-npcs" class="panel">
+    <div style="display:flex; gap:10px; margin-bottom:12px;">
+      <input class="input" id="npcSearch" placeholder="Filter NPCs..." oninput="renderNpcs()" style="margin:0; flex:1;">
+      <button class="btn-sm" style="background:var(--purple);" onclick="openNpcEditor('new')">+ New NPC</button>
+    </div>
+    <div id="npcListDisplay"></div>
   </div>
 
   <div id="panel-hof" class="panel">
     <div class="card">
         <div class="section-title">Induct a Legend</div>
-        <label class="input-label">Character Name</label>
-        <input class="input" id="h-name" placeholder="Who is being inducted?">
-        
-        <label class="input-label">Title / Honor</label>
-        <input class="input" id="h-title" placeholder="e.g. The Undying">
-        
-        <label class="input-label">Reason for Induction</label>
-        <select class="input" id="h-reason">
-            <option>Natural 20 on world-changing action</option>
-            <option>Story-defining death</option>
-            <option>Box Battle OP tier (45,000+ coins)</option>
-            <option>Legendary reputation title earned</option>
-            <option>Origin Story episode produced</option>
-            <option>Other legendary moment</option>
-        </select>
-        
-        <label class="input-label">The Legend (Lore Notes)</label>
-        <textarea class="input" id="h-notes" style="height:80px;" placeholder="Describe the moment that cemented their legacy..."></textarea>
-        
+        <input class="input" id="h-name" placeholder="Character Name">
+        <input class="input" id="h-title" placeholder="Title / Honor (e.g. The Undying)">
+        <input class="input" id="h-reason" placeholder="Reason for Induction">
+        <textarea class="input" id="h-notes" style="height:80px;" placeholder="Lore notes..."></textarea>
         <button class="btn" style="background:var(--gold); color:#000; border-color:var(--gold);" onclick="addHof()">🏆 Induct to Hall of Fame</button>
     </div>
     <div class="section-title">The Hall of Legends</div>
     <div id="hofList"></div>
   </div>
 
-  <div id="panel-forge" class="panel">
+  <div id="panel-rules" class="panel">
     <div class="card">
-      <div class="section-title">Identity</div>
-      <label class="input-label">TikTok Username</label><input class="input" id="f-user" placeholder="@username">
-      <label class="input-label">Lore Name</label><input class="input" id="f-name" placeholder="Character Name">
-      <label class="input-label">Class Path</label>
-      <select class="input" id="f-class">
-        <option value="">Select Path...</option>
-        <option>Warrior</option><option>Wizard</option><option>Rogue</option><option>Healer</option><option>Merchant</option><option>Bard</option>
-      </select>
-      <div class="section-title">Visual Imprinting</div>
-      <div style="display:flex; gap:12px; margin-bottom:12px;">
-        <div style="flex:1;"><label class="btn-sm" style="display:block; text-align:center; padding:12px;">TikTok Pic <input type="file" hidden onchange="handleImage(this, 'user')"></label><img id="prev-user" style="width:100%; height:90px; object-fit:cover; border-radius:12px; margin-top:8px; display:none;"></div>
-        <div style="flex:1;"><label class="btn-sm" style="display:block; text-align:center; padding:12px;">Char Art <input type="file" hidden onchange="handleImage(this, 'char')"></label><img id="prev-char" style="width:100%; height:90px; object-fit:cover; border-radius:12px; margin-top:8px; display:none;"></div>
-      </div>
-      <button class="btn" style="background:linear-gradient(135deg, #6366f1, #a855f7); color:#fff; border:none;" onclick="commitCharacter()">FORGE & COMMIT TO LORE</button>
+        <div class="section-title">The Core Laws</div>
+        <select class="input" id="ruleSelect" onchange="renderRuleText()"></select>
+        <div id="ruleTextDisplay" style="font-size:0.8rem; line-height:1.6; color:var(--text); margin-top:10px;"></div>
+    </div>
+    <div class="card">
+        <div class="section-title">FAQ</div>
+        <div id="faqDisplay"></div>
     </div>
   </div>
 
-  <div id="panel-arena" class="panel">
+  <div id="panel-wrapup" class="panel">
+    <div class="card">
+      <div class="section-title">Session Notes & Open Threads</div>
+      <textarea id="sessNotes" class="input" style="height:300px;" oninput="saveSess()"></textarea>
+    </div>
+    <button class="btn" style="background:var(--red); color:#fff; border:none;" onclick="wipeDatabase()">⚠️ NUCLEAR DATABASE WIPE</button>
+  </div>
+
+  <div class="modal-overlay" id="pModal"><div class="modal" id="pModalContent"></div></div>
+  <div class="modal-overlay" id="vModal"><div class="modal" id="vModalContent"></div></div>
+  <div class="modal-overlay" id="nModal"><div class="modal" id="nModalContent"></div></div>
+
+  <script>
+    const CLASS_HP = { Warrior:12, Wizard:7, Rogue:8, Healer:9, Merchant:8, Bard:8 };
+    const CLASS_ICON = { Warrior:"⚔️", Wizard:"🔮", Rogue:"🗡️", Healer:"💚", Merchant:"💰", Bard:"🎵" };
+    
+    const TRAIT_TIERS = [
+        {range:[1,4], level:"⚠ Weakened", color:"#ef5350"},
+        {range:[5,9], level:"✓ Standard", color:"#66bb6a"},
+        {range:[10,14], level:"★ Strong", color:"#4fc3f7"},
+        {range:[15,19], level:"✦ Exceptional", color:"#ffb300"},
+        {range:[20,20], level:"⚡ LEGENDARY", color:"#ce93d8"}
+    ];
+
+    const REP = {
+        Warrior: [
+            {r:[1,1], title:"The Broken Shield", passive:"-1 first combat roll/session. Allies gain +1 DEF nearby."},
+            {r:[2,2], title:"The Deserter", passive:"Cannot call authority backup. Rogue contacts available."},
+            {r:[3,3], title:"The Cursed Blade", passive:"First weapon roll/arc disadvantage. Crits deal +2."},
+            {r:[4,4], title:"The Unfinished War", passive:"+1 intimidation. -1 social rolls outside combat."},
+            {r:[5,7], title:"The Steadfast", passive:"Allies nearby cannot be cursed without rolling first."},
+            {r:[8,9], title:"The Iron Wall", passive:"+1 DEF rolls when protecting another player."},
+            {r:[10,11], title:"The Oathkeeper", passive:"Declare an oath once/session. If fulfilled, +2 to next 3 rolls."},
+            {r:[12,13], title:"The Last Line", passive:"+2 combat rolls at 3 HP or below."},
+            {r:[14,14], title:"The Hollow's Bulwark", passive:"Immune to first curse each arc."},
+            {r:[15,16], title:"The Undying", passive:"If dying, roll d20. 10+ = survive at 1 HP (once/arc)."},
+            {r:[17,18], title:"The Warlord of Ash", passive:"Can command allies. 15+ action roll lands as bonus."},
+            {r:[19,19], title:"The Unkillable", passive:"+1 all combat. Hostiles must roll to approach."},
+            {r:[20,20], title:"THE HOLLOW'S CHAMPION", passive:"Once/arc, call on The Hollow to re-roll any result."}
+        ],
+        Wizard: [
+            {r:[1,1], title:"The Silenced", passive:"First spell/session: d6, on 1 the effect reverses."},
+            {r:[2,2], title:"The Forbidden Scholar", passive:"+2 INT, -1 WIS. Access to forbidden rolls."},
+            {r:[3,3], title:"The Unstable", passive:"On fumble, spell affects an additional random target."},
+            {r:[4,4], title:"The Once-Great", passive:"-1 spell rolls but +2 in their research era."},
+            {r:[5,7], title:"The Theorist", passive:"+1 puzzle-solving and knowledge rolls."},
+            {r:[8,9], title:"The Practical Caster", passive:"Cast minor spells without full action once/session."},
+            {r:[10,11], title:"The Arcanist", passive:"+1 all INT. Arcane locks respond to them."},
+            {r:[12,13], title:"The Seeker", passive:"Once/session, ask DM one yes/no about current arc."},
+            {r:[14,14], title:"The Hollow's Eye", passive:"+2 detecting illusions, hidden passages, deception."},
+            {r:[15,16], title:"The Void Speaker", passive:"Once/arc, attempt communication with non-speaking entity."},
+            {r:[17,18], title:"The Architect of Ruin", passive:"+2 area-effect and destructive spell rolls."},
+            {r:[19,19], title:"The Worldbreaker", passive:"+2 all spells. Average-INT enemies flee on fumble."},
+            {r:[20,20], title:"THE HOLLOW'S ORACLE", passive:"Once/arc, DM must give one piece of true hidden lore."}
+        ],
+        Rogue: [
+            {r:[1,1], title:"The Marked", passive:"Once/session an NPC may attempt to claim bounty."},
+            {r:[2,2], title:"The Burned Informant", passive:"-1 trust rolls. +1 solo infiltration."},
+            {r:[3,3], title:"The Phantom Thief", passive:"Cannot trade stolen items openly."},
+            {r:[4,4], title:"The Failed Contract", passive:"-1 guild rolls. +1 off-the-books."},
+            {r:[5,7], title:"The Reliable Shadow", passive:"+1 stealth and infiltration."},
+            {r:[8,9], title:"The Cutpurse", passive:"+1 pickpocket and sleight of hand."},
+            {r:[10,11], title:"The Hollow Fox", passive:"+2 stealth in natural and dark environments."},
+            {r:[12,13], title:"The Ghost Contract", passive:"Once/session, complete minor objective off-screen."},
+            {r:[14,14], title:"The Hollow's Whisper", passive:"Immune to environmental detection in Hollow locations."},
+            {r:[15,16], title:"The Unseen Blade", passive:"+2 sneak attack. Critical hits on 19-20."},
+            {r:[17,18], title:"The Collector of Secrets", passive:"Once/arc, reveal a secret about a named NPC."},
+            {r:[19,19], title:"The Sovereign of Shadows", passive:"+2 covert rolls. One favour from underground/arc."},
+            {r:[20,20], title:"THE HOLLOW'S PHANTOM", passive:"Once/arc, any action they take is undetectable."}
+        ],
+        Healer: [
+            {r:[1,1], title:"The One Who Couldn't", passive:"-1 first heal/session. Success despite this = +2 next."},
+            {r:[2,2], title:"The Cursed Hands", passive:"On fumble healing, target briefly cursed instead."},
+            {r:[3,3], title:"The Heretic Mender", passive:"+1 non-standard injuries. -1 in holy locations."},
+            {r:[4,4], title:"The Plague Memory", passive:"+2 disease knowledge. Some NPCs won't be touched."},
+            {r:[5,7], title:"The Mender", passive:"+1 all healing rolls."},
+            {r:
+
+<div id="panel-arena" class="panel">
     <div class="card" style="text-align:center; padding:40px;">
         <div style="font-size:5rem;" onclick="rollD20()">🎲</div>
         <div id="rollVal" style="font-size:3rem; font-weight:bold; color:var(--accent); margin-top:10px;">FATE</div>
@@ -201,30 +405,110 @@
     </div>
   </div>
 
+  <div id="panel-arsenal" class="panel">
+    <div class="card">
+        <div class="section-title">The Master Armory</div>
+        <select class="input" id="arsenalFilter" onchange="renderArsenalHardcoded()">
+            <option value="Warrior">Warrior Weapons</option>
+            <option value="Wizard">Wizard Focuses</option>
+            <option value="Rogue">Rogue Blades</option>
+            <option value="Healer">Healer Kits</option>
+            <option value="Merchant">Merchant Tools</option>
+            <option value="Bard">Bard Instruments</option>
+        </select>
+        <div id="arsenalDisplay"></div>
+    </div>
+  </div>
+
+  <div id="panel-lore" class="panel">
+    <div class="card">
+        <div class="section-title">The Lore Archive</div>
+        <select class="input" id="loreFilter" onchange="renderLoreHardcoded()">
+            <option value="Skills">Signature Skills (All Classes)</option>
+            <option value="Shadows">Shadow Traits (All Classes)</option>
+            <option value="Enchants">Enchantments (All Classes)</option>
+            <option value="Destiny">Destiny Threads (All Classes)</option>
+            <option value="Factions">World Factions & History</option>
+        </select>
+        <div id="loreDisplay"></div>
+    </div>
+  </div>
+
+  <div id="panel-npcs" class="panel">
+    <div style="display:flex; gap:10px; margin-bottom:12px;">
+      <input class="input" id="npcSearch" placeholder="Filter NPCs..." oninput="refreshNpcs()" style="margin:0; flex:1;">
+      <button class="btn-sm" style="background:var(--accent);" onclick="openNpcEditor('new')">+ New NPC</button>
+    </div>
+    <div id="npcListDisplay"></div>
+  </div>
+
+  <div id="panel-rules" class="panel">
+    <div class="card">
+        <div class="section-title">The Core Laws</div>
+        <div style="font-size:0.8rem; color:var(--text); line-height:1.7;">
+            <p>1. <strong>Death is Permanent:</strong> Unless a Resurrection (6k coins) is paid or a Healer revives you, your name retires into history.</p><br>
+            <p>2. <strong>Everything Carries Over:</strong> Your HP, items, reputations, and curses save to the cloud. Tomorrow is a continuation, not a reset.</p><br>
+            <p>3. <strong>The Box Battle:</strong> Highest coins after 3 minutes wins. Winner selects consequence from the tier reached. DM rolls d20 to finalize. Loser accepts the Domino Effect.</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="section-title">Frequently Asked Questions</div>
+        <div id="faqList"></div>
+    </div>
+  </div>
+
+  <div id="panel-wrapup" class="panel">
+    <div class="card">
+      <div class="section-title">Post-Session Checklist</div>
+      <div style="font-size:0.8rem; line-height:2; color:var(--dim);">
+        <input type="checkbox" id="chk1"> <label for="chk1">HP updated for all active players</label><br>
+        <input type="checkbox" id="chk2"> <label for="chk2">Inventory & Lore changes logged</label><br>
+        <input type="checkbox" id="chk3"> <label for="chk3">Box Battle ripple effects noted</label><br>
+        <input type="checkbox" id="chk4"> <label for="chk4">Discord summary posted</label>
+      </div>
+    </div>
+    <div class="card">
+      <div class="section-title">Campaign Notes & Unresolved Threads</div>
+      <textarea id="sessNotes" class="input" style="height:200px;" oninput="saveNotes()"></textarea>
+    </div>
+  </div>
+
   <div class="modal-overlay" id="pModal"><div class="modal" id="pModalContent"></div></div>
   <div class="modal-overlay" id="vModal"><div class="modal" id="vModalContent"></div></div>
+  <div class="modal-overlay" id="npcModal"><div class="modal" id="npcModalContent"></div></div>
 
   <script>
-    // ════════════════════════════════════════════════════════════
-    // MASTER SCRIPT ENGINE (UNCOMPRESSED ARCHITECTURE)
-    // ════════════════════════════════════════════════════════════
-
-    let state = JSON.parse(localStorage.getItem('HR_WORLD_BIBLE_V2')) || { 
-        players: [], 
-        villains: [], 
-        hof: [], 
+    // ════ 1. STATE & PERSISTENCE ════
+    let state = JSON.parse(localStorage.getItem('HR_WORLD_BIBLE_V3')) || { 
+        players: [], villains: [], hof: [], npcs: [],
         world: { arcTitle:"", arcVillain:"", arcThread:"", events:"" }, 
-        logs: [] 
+        notes: "" 
     };
-    
     let tempUserImg = null, tempCharImg = null;
 
-    // SAVE TO LOCAL STORAGE
-    function save() { 
-        localStorage.setItem('HR_WORLD_BIBLE_V2', JSON.stringify(state)); 
-    }
+    function save() { localStorage.setItem('HR_WORLD_BIBLE_V3', JSON.stringify(state)); }
 
-    // TAB NAVIGATION
+    // ════ 2. AUTO-TAB INJECTOR (Fixes Header Without Scrolling) ════
+    const tabContainer = document.querySelector('.tabs');
+    const missingTabs = [
+        {target: 'arsenal', label: '⚔️ Arsenal'},
+        {target: 'lore', label: '📖 Lore'},
+        {target: 'npcs', label: '👁 NPCs'},
+        {target: 'rules', label: '📜 Rules'},
+        {target: 'wrapup', label: '📝 Wrap'}
+    ];
+    
+    missingTabs.forEach(t => {
+        if(!document.querySelector(\`.tab[data-target="\${t.target}"]\`)){
+            const el = document.createElement('div');
+            el.className = 'tab';
+            el.setAttribute('data-target', t.target);
+            el.innerText = t.label;
+            tabContainer.appendChild(el);
+        }
+    });
+
+    // Re-attach Tab Listeners to ALL tabs
     document.querySelectorAll('.tab').forEach(tab => {
         tab.addEventListener('click', () => {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -233,358 +517,205 @@
             const target = tab.getAttribute('data-target');
             document.getElementById('panel-' + target).classList.add('active');
             
+            // Render specific tab content
             if(target === 'party') refreshParty();
             if(target === 'protect') renderProtect();
             if(target === 'villains') renderVillains();
             if(target === 'world') renderWorld();
             if(target === 'hof') renderHof();
+            if(target === 'arsenal') renderArsenalHardcoded();
+            if(target === 'lore') renderLoreHardcoded();
+            if(target === 'npcs') refreshNpcs();
+            if(target === 'rules') renderFaq();
+            if(target === 'wrapup') document.getElementById('sessNotes').value = state.notes || "";
         });
     });
 
-    // ════════════════════════════════════════════════════════════
-    // PARTY SYSTEM
-    // ════════════════════════════════════════════════════════════
+    // ════ 3. THE RAW LORE DATABASES (UN-COMPRESSED) ════
+    const WEAPON_BIBLE = {
+      Warrior: [
+        { r: "1-4", n: "Cracked Garrison Sword", s: "Battered", h: "Mass-produced for the Kingdom’s standing army. Every fracture line marks a blow that should have broken it and didn’t. Soldiers don’t replace them; they name them.", m: "No mechanical bonus. History of survival." },
+        { r: "5-9", n: "Garrison Longsword", s: "Standard", h: "Standard issue for Kingdom officers. Properly tempered, properly balanced. Designed to last a career. Some have.", m: "Reliable and consistent performance." },
+        { r: "10-14", n: "Tempered Hollow Steel Blade", s: "Fine", h: "Forged from ore found in shifting cavern veins. The metal absorbs light rather than catching it. Experienced fighters say it feels 'attentive'.", m: "+1 Combat in Dark/Underground" },
+        { r: "15-19", n: "The Shieldbreaker", s: "Rare", h: "Geometry modified to redistribute weight toward the tip. Designed by a smith who understood exactly where armor fails. Recovered from a lost battlefield.", m: "Ignores 1 point of enemy DEF on successful hit." },
+        { r: "20", n: "Mythic: Hollow Edge", s: "Mythic", h: "It did not arrive by forge. It simply was there. When carried, ambient danger decreases because the threats themselves reassess their chances.", m: "Double effect vs Hollow entities. Final strike option." }
+      ],
+      Wizard: [
+        { r: "1-4", n: "Cracked Focus Crystal", s: "Battered", h: "Grown, not cut. The crack splits the light into wrong colors, making the channeling unpredictable. Caster must compensate manually.", m: "Normal function, but fumbles amplify backfires." },
+        { r: "5-9", n: "Scholar's Focus Rod", s: "Standard", h: "Produced by the Sunken Library. Reliable, standardized, and recognized by academic NPCs.", m: "Consistent Casting" },
+        { r: "10-14", n: "Hollow-Tuned Grimoire", s: "Fine", h: "Paper from trees at the Edge. Ink contains trace Hollow water. Marginal notes appear in a hand that is not yours.", m: "+1 Spell Rolls in Caverns" },
+        { r: "15-19", n: "The Resonance Staff", s: "Rare", h: "Staff resonates at a frequency just below hearing. Dark entities see this as a high-tier threat automatically.", m: "+1 Offensive Spell Damage" },
+        { r: "20", n: "THE VOID CODEX", s: "Mythic", h: "Reading it provides information already in your mind. The codex just organizes it. You will never age normally while carrying this.", m: "+2 All Spell Rolls" }
+      ],
+      Rogue: [
+        { r: "1-4", n: "Worn Shortsword", s: "Battered", h: "A familiar blade. Scratched, re-edged, grip worn smooth. No surprises. In your line of work, that is everything.", m: "Reliable under pressure" },
+        { r: "5-9", n: "Balanced Daggers (Pair)", s: "Standard", h: "Professional equipment. Calibrated muscle memory. Simultaneous draw and dual-strike capability.", m: "Negate defensive fighting penalty" },
+        { r: "10-14", n: "Hollow-Edged Stiletto", s: "Fine", h: "Inlaid with Hollow ore along the cutting edge. Assists in finding gaps in heavy armor that standard blades pass.", m: "+1 Attack from Stealth" },
+        { r: "15-19", n: "The Silencer", s: "Rare", h: "No maker's mark. Witnesses forget the blade's shape instantly. Actions produced with this make no unintended sound.", m: "Actions unheard by untargeted NPCs" },
+        { r: "20", n: "THE LAST WORD", s: "Mythic", h: "It chooses the Rogue when the previous carrier dies. It ends things with a quiet finality.", m: "One success per arc with no roll" }
+      ],
+      Healer: [
+        { r: "1-4", n: "Worn Herb Satchel", s: "Battered", h: "Stains inside record years of preparations. Soft leather, rounded edges. You have worked, and it shows.", m: "Standard healing supplies" },
+        { r: "5-9", n: "Mender's Kit & Staff", s: "Standard", h: "Order issue. Integrated focus. Conduit and support in one. Comforting warmth for patients.", m: "Official Certification standing" },
+        { r: "10-14", n: "Hollow Root Salves", s: "Fine", h: "Transition zone botany. Chemistry understands the Hollow-source of the injury and reacts accordingly.", m: "+1 Healing on Hollow wounds" },
+        { r: "15-19", n: "The Binding Lantern", s: "Rare", h: "Illuminates hidden status effects, curses, and enchantments on a patient. You treat what others cannot see.", m: "Reveal all status once/session" },
+        { r: "20", n: "THE FIRST REMEDY", s: "Mythic", h: "It predates documentation. Heals in the way things heal when given exactly what they need.", m: "One max heal per arc with no roll" }
+      ],
+      Merchant: [
+        { r: "1-4", n: "Rusty Counting Scales", s: "Battered", h: "Used in markets and river crossings. slow arms, but predictable results for those who know them. biography of travel.", m: "Standard trade valuation" },
+        { r: "5-9", n: "Merchant's Pack & Ledger", s: "Standard", h: "Guild identity. Ledger is a record of debt, history, and contact. surrendered only upon retirement.", m: "Guild service access" },
+        { r: "10-14", n: "Hollow Market Satchel", s: "Fine", h: "Mineral treatment from Cavern deposits. feels empty regardless of contents. undetectable by search.", m: "Items undetectable by mundane inspection" },
+        { r: "15-19", n: "The Gilded Tongue", s: "Rare", h: "Negotiation focus. Carrier knows exactly what NPCs need to hear to resolve an impasse without losing face.", m: "Neutralize hostile NPC once/arc" },
+        { r: "20", n: "THE OPEN ACCOUNT", s: "Mythic", h: "Ledger that creates reality. Entries become binding debts. The Hollow itself enforces every transaction written.", m: "Write transaction into truth once/arc" }
+      ],
+      Bard: [
+        { r: "1-4", n: "Cracked Lute", s: "Battered", h: "continuity matters more than perfection. Warm mid-range tones, honest resonance. Fans identify it by the crack.", m: "Distinctive honest tone" },
+        { r: "5-9", n: "Travelling Instrument", s: "Standard", h: "Road-worthy construction. durability and weather resistance over ornamentation. consistent performance.", m: "Reliable in adverse weather" },
+        { r: "10-14", n: "Hollow-Carved Instrument", s: "Fine", h: "Spiralling grain wood from Edge trees. Space responds to the sound. present in a way normal instruments aren't.", m: "+1 performance in Hollow locations" },
+        { r: "15-19", n: "The Resonance Chord", s: "Rare", h: "Changes emotional state with surgical precision. Not 'feel better', but 'feel what is needed to agree'.", m: "NPC mood shift succeeds once/session" },
+        { r: "20", n: "THE FIRST SONG", s: "Mythic", h: "instrument and composition are inseparable. Whatever is present stops and listens. carry messages from those no longer here.", m: "Change world lore once/arc" }
+      ]
+    };
 
-    function handleImage(input, type) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const img = new Image();
-            img.onload = () => {
-                const canvas = document.createElement('canvas');
-                canvas.width = 150; canvas.height = 150;
-                canvas.getContext('2d').drawImage(img, 0, 0, 150, 150);
-                const data = canvas.toDataURL('image/jpeg', 0.7);
-                if(type === 'user') { tempUserImg = data; document.getElementById('prev-user').src = data; document.getElementById('prev-user').style.display = 'block'; }
-                else { tempCharImg = data; document.getElementById('prev-char').src = data; document.getElementById('prev-char').style.display = 'block'; }
-            };
-            img.src = e.target.result;
-        };
-        reader.readAsDataURL(input.files[0]);
-    }
+    const SKILLS_LORE = {
+      "Skills": [
+        { n: "Warrior: Reckless Charge [Roll: 1-2]", d: "Throws themselves into danger first. -1 DEF, +2 first attack roll each session." },
+        { n: "Warrior: Shield Wall [Roll: 5-6]", d: "Anchor a defensive position. Allies behind get +1 DEF while stationary." },
+        { n: "Wizard: Volatile Casting [Roll: 1-2]", d: "No control, max output. Spells hit harder, 1-in-6 chance of backfire." },
+        { n: "Wizard: Hollow Channelling [Roll: 15-16]", d: "Draw power from Hollow. Once per arc, cast spell beyond normal tier." },
+        { n: "Rogue: Ghost Entry [Roll: 19-19]", d: "Enter non-magically-sealed location without a roll. Leaves no trace." },
+        { n: "Healer: Field Stitching [Roll: 1-2]", d: "Stabilize wound without materials. Buys two rounds before condition worsens." },
+        { n: "Merchant: Fast Talk [Roll: 1-2]", d: "Distract, delay, or confuse NPC with words. Buys one round without roll." },
+        { n: "Bard: Emotional Manipulation [Roll: 7-8]", d: "+2 persuasion when exploiting a known emotional vulnerability." }
+      ],
+      "Shadows": [
+        { n: "Warrior: Blood Debt [Roll: 1-2]", d: "Owes life to someone dangerous. That someone will eventually collect." },
+        { n: "Wizard: Truth Compulsion [Roll: 11-12]", d: "Cannot lie convincingly. CHA roll required for deliberate deception." },
+        { n: "Rogue: Exit Planning [Roll: 17-18]", d: "Always planning how to leave. Cannot commit to alliance. -1 trust rolls." },
+        { n: "Healer: Cursed Sympathy [Roll: 3-4]", d: "Absorbs minor ailments from patients. Carries residue." },
+        { n: "Merchant: The Insider [Roll: 7-8]", d: "Feeding information to two competing factions. Neither knows." },
+        { n: "Bard: The Fabrication [Roll: 3-4]", d: "A famous story turned out false. Believers still exist." }
+      ],
+      "Enchants": [
+        { n: "Warrior: The Enduring [Roll: 4-6]", d: "Cannot be knocked out by single blow. Reduced to 0 HP over time." },
+        { n: "Wizard: Void Touch [Roll: 18-19]", d: "Hands pass through non-living matter once per session." },
+        { n: "Rogue: Lucky Step [Roll: 1-3]", d: "Once per session, reroll any movement or evasion roll." },
+        { n: "Healer: The Transfer [Roll: 16-17]", d: "Once/arc, move status effect from one character to another willing." }
+      ],
+      "Destiny": [
+        { n: "Warrior: Thread 19", d: "Every battle survived makes final one inevitable. Hollow is building toward something." },
+        { n: "Wizard: Thread 5-6", d: "The forbidden thing they studied was a message. They are the intended recipient." },
+        { n: "Rogue: Thread 19", d: "The Hollow has an exit. They will find it. What they leave behind is the question." },
+        { n: "Healer: Thread 7-8", d: "Three people they save will together do something that changes the Hollow." }
+      ],
+      "Factions": [
+        { n: "The Moon Squad", d: "The elite vanguard of the bobblehead world. Forged in the fires of the Great TikTok Migration. They seek to map the unmappable and protect refugees. Crest: Crescent moon over a void." },
+        { n: "The Hollow Warden's Court", d: "Oldest governing body within the Underground Caverns. They manage the 'Protection Mode' bank. Patient, neutral, remember every betrayal. To cross a Warden invites a curse across multiple lives." },
+        { n: "The Crumbling Kingdom", d: "The surface world that was. Now a ruin pouring refugees into the Hollow. Their military remnants still wear the Garrison steel, clinging to oaths for a king who hasn't been seen in three arcs." },
+        { n: "The Sunken Library", d: "An academic order that prioritizes documentation over survival. They catalog the Hollow's anomalies. Their records are flawless; their ethics are debated." }
+      ]
+    };
 
-    function commitCharacter() {
-        const user = document.getElementById('f-user').value;
-        const name = document.getElementById('f-name').value;
-        const cls = document.getElementById('f-class').value;
+    // ════ 4. LOGIC ENGINE (ALL FUNCTIONS MERGED) ════
 
-        if(!user || !name || !cls) return alert("You must provide TikTok user, Lore Name, and Class.");
-
-        const p = {
-            id: Date.now(), user, name, cls,
-            hp: 10, maxHp: 10, protectionBalance: 0, isDead: false,
-            userImg: tempUserImg, charImg: tempCharImg,
-            status: "Active", faction: "Unaligned", inv: ""
-        };
-
-        state.players.unshift(p);
-        save();
-        alert(name + " has been written into the Lore.");
-        
-        document.getElementById('f-user').value = ''; document.getElementById('f-name').value = ''; document.getElementById('f-class').value = '';
-        document.getElementById('prev-user').style.display = 'none'; document.getElementById('prev-char').style.display = 'none';
-        tempUserImg = null; tempCharImg = null;
-        refreshParty();
-    }
-
-    function refreshParty() {
-        const s = document.getElementById('searchBar').value.toLowerCase();
-        document.getElementById('partyList').innerHTML = state.players.filter(p => p.name.toLowerCase().includes(s) || p.user.toLowerCase().includes(s)).map(p => {
-            const pct = (p.hp / p.maxHp) * 100;
-            return `
-            <div class="player-card" style="border-color:${p.isDead ? 'var(--red)' : p.protectionBalance > 0 ? 'var(--gold)' : 'var(--border)'}; opacity:${p.isDead ? 0.6 : 1}">
-                <div style="display:flex; align-items:center;">
-                    <div class="avatar-stack">
-                        <div class="avatar-main">${p.charImg ? `<img src="${p.charImg}" style="width:100%;height:100%;border-radius:18px;object-fit:cover;">` : '👤'}</div>
-                        <div class="avatar-sub">${p.userImg ? `<img src="${p.userImg}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">` : '@'}</div>
-                    </div>
-                    <div style="flex:1;">
-                        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-                            <div>
-                                <div style="font-weight:900; font-size:1.2rem;">${p.name} ${p.isDead ? '☠️' : ''}</div>
-                                <div style="font-size:0.7rem; color:var(--accent); text-transform:uppercase; letter-spacing:1px;">@${p.user} • ${p.cls}</div>
-                            </div>
-                            <button class="btn-sm" style="border:none; background:transparent; font-size:1rem;" onclick="openPlayerEditor(${p.id})">⚙️</button>
-                        </div>
-                        <div style="font-size:0.65rem; color:var(--dim); margin-top:4px;">${p.status} | ${p.protectionBalance > 0 ? `🛡 Protected (${p.protectionBalance})` : '⚠ Unprotected'}</div>
-                        <div style="margin-top:8px; display:flex; align-items:center; gap:8px;">
-                            <button class="btn-sm" style="border-color:var(--red); color:var(--red);" onclick="adjHp(${p.id}, -1)">-</button>
-                            <div style="flex:1;" class="hp-bar"><div class="hp-fill" style="width:${pct}%; background:${pct > 40 ? 'var(--green)' : 'var(--red)'}"></div></div>
-                            <div style="font-size:0.75rem; font-weight:bold; color:var(--text);">${p.hp}/${p.maxHp}</div>
-                            <button class="btn-sm" style="border-color:var(--green); color:var(--green);" onclick="adjHp(${p.id}, 1)">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>`;
-        }).join('');
-    }
-
-    function adjHp(id, d) {
-        const p = state.players.find(x => x.id === id);
-        p.hp = Math.max(0, Math.min(p.maxHp, p.hp + d));
-        save(); refreshParty();
-    }
-
-    function openPlayerEditor(id) {
-        const p = state.players.find(x => x.id === id);
-        document.getElementById('pModalContent').innerHTML = `
-            <div class="section-title">Edit: ${p.name}</div>
-            <label class="input-label">Current Status</label><input class="input" id="ep-status" value="${p.status}">
-            <label class="input-label">Max HP</label><input type="number" class="input" id="ep-mhp" value="${p.maxHp}">
-            <label class="input-label">Inventory & Notes</label><textarea class="input" id="ep-inv" style="height:100px;">${p.inv}</textarea>
-            
-            <div style="display:flex; gap:10px; margin-top:10px;">
-                <button class="btn" style="background:var(--gold); border-color:var(--gold); color:#000;" onclick="toggleDeath(${p.id})">${p.isDead ? "⚗️ Resurrect" : "☠️ Mark Dead"}</button>
-            </div>
-            
-            <button class="btn" style="margin-top:10px;" onclick="savePlayer(${p.id})">Save Changes</button>
-            <button class="btn-sm" style="width:100%; margin-top:10px;" onclick="closeModals()">Cancel</button>
-        `;
-        document.getElementById('pModal').classList.add('open');
-    }
-
-    function savePlayer(id) {
-        const p = state.players.find(x => x.id === id);
-        p.status = document.getElementById('ep-status').value;
-        p.maxHp = parseInt(document.getElementById('ep-mhp').value);
-        if(p.hp > p.maxHp) p.hp = p.maxHp;
-        p.inv = document.getElementById('ep-inv').value;
-        save(); closeModals(); refreshParty();
-    }
-
-    function toggleDeath(id) {
-        const p = state.players.find(x => x.id === id);
-        p.isDead = !p.isDead;
-        p.hp = p.isDead ? 0 : p.maxHp;
-        save(); closeModals(); refreshParty();
-    }
-
-    // ════════════════════════════════════════════════════════════
-    // PROTECTION LEDGER
-    // ════════════════════════════════════════════════════════════
-    function renderProtect() {
-        const list = document.getElementById('protectList');
-        const activePlayers = state.players.filter(p => !p.isDead);
-        
-        if (activePlayers.length === 0) {
-            list.innerHTML = `<div style="text-align:center; color:var(--dim); padding:40px;">No living adventurers to protect.</div>`;
-            return;
-        }
-
-        list.innerHTML = activePlayers.map(p => `
-            <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--border);">
-                <div>
-                    <div style="font-weight:bold; font-size:0.9rem; color:#fff;">${p.name}</div>
-                    <div style="font-size:0.65rem; color:var(--dim);">@${p.user}</div>
-                </div>
-                <div style="text-align:right;">
-                    <div style="font-weight:bold; font-size:0.9rem; color:${p.protectionBalance > 0 ? 'var(--gold)' : 'var(--dim)'};">${p.protectionBalance > 0 ? `🛡 ${p.protectionBalance.toLocaleString()}` : '⚠ 0'}</div>
-                    <div style="display:flex; gap:5px; margin-top:4px;">
-                        <button class="btn-sm" style="background:rgba(239,83,80,0.2); color:var(--red); border-color:var(--red); padding:4px 8px;" onclick="adjProtect(${p.id}, -1000)">-1k</button>
-                        <button class="btn-sm" style="background:rgba(251,191,36,0.2); color:var(--gold); border-color:var(--gold); padding:4px 8px;" onclick="adjProtect(${p.id}, 1000)">+1k</button>
-                    </div>
+    function renderArsenalHardcoded() {
+        const cls = document.getElementById('arsenalFilter').value;
+        const display = document.getElementById('arsenalDisplay');
+        display.innerHTML = WEAPON_BIBLE[cls].map(w => `
+            <div style="background:rgba(0,0,0,0.2); padding:16px; border-radius:12px; border-left:3px solid var(--accent); margin-bottom:20px;">
+                <div style="font-size:1.1rem; font-weight:800; color:#fff;">${w.n} <span style="font-size:0.6rem; padding:3px 8px; border-radius:6px; border:1px solid currentColor;">${w.s}</span></div>
+                <div style="font-size:0.65rem; color:var(--gold); margin:4px 0 8px;">Roll Tier: ${w.r}</div>
+                <div style="font-size:0.85rem; color:var(--dim); line-height:1.7; font-style:italic; margin-bottom:12px;">${w.h}</div>
+                <div style="background:rgba(0,0,0,0.3); padding:10px; border-radius:8px; border:1px solid var(--border);">
+                    <div style="font-size:0.6rem; color:var(--accent); font-weight:700; text-transform:uppercase;">Mechanics</div>
+                    <div style="font-size:0.75rem; color:#fff;">${w.m}</div>
                 </div>
             </div>
         `).join('');
     }
 
-    function adjProtect(id, amount) {
-        const p = state.players.find(x => x.id === id);
-        p.protectionBalance = Math.max(0, (p.protectionBalance || 0) + amount);
-        save(); renderProtect();
-    }
-
-    // ════════════════════════════════════════════════════════════
-    // VILLAIN TRACKER
-    // ════════════════════════════════════════════════════════════
-    function renderVillains() {
-        const list = document.getElementById('villainList');
-        if (!state.villains || state.villains.length === 0) {
-            list.innerHTML = `<div style="text-align:center; color:var(--dim); padding:40px;">No active antagonists. The Realm is quiet.</div>`;
-            return;
-        }
-
-        list.innerHTML = state.villains.map(v => {
-            const hpPct = Math.max(0, (v.hp / v.maxHp) * 100);
-            return `
-            <div class="villain-card">
-                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-                    <div>
-                        <div style="font-weight:900; font-size:1.2rem; color:var(--red);">${v.name}</div>
-                        <div style="font-size:0.7rem; color:var(--dim); text-transform:uppercase; letter-spacing:1px;">${v.title}</div>
-                    </div>
-                    <div style="text-align:right;">
-                        <span class="phase-badge" style="color:var(--purple); border-color:var(--purple); background:rgba(167,139,250,0.1);">Phase ${v.phase}</span>
-                    </div>
-                </div>
-                
-                <div style="margin:12px 0;">
-                    <div style="display:flex; justify-content:space-between; font-size:0.7rem; color:var(--dim); margin-bottom:4px;"><span>Threat HP</span><span style="color:#fff; font-weight:bold;">${v.hp} / ${v.maxHp}</span></div>
-                    <div class="hp-bar"><div class="hp-fill" style="width:${hpPct}%; background:var(--red); box-shadow:0 0 10px var(--red);"></div></div>
-                </div>
-
-                <div style="display:flex; gap:6px; margin-bottom:12px;">
-                    <button class="btn-sm" style="background:rgba(239,83,80,0.2); color:var(--red); border-color:var(--red);" onclick="adjVillainHp(${v.id}, -10)">-10 DMG</button>
-                    <div style="flex:1;"></div>
-                    <button class="btn-sm" style="background:rgba(52,211,153,0.2); color:var(--green); border-color:var(--green);" onclick="adjVillainHp(${v.id}, 10)">+10 HEAL</button>
-                </div>
-
-                <div style="background:rgba(0,0,0,0.4); padding:10px; border-radius:8px; border:1px solid var(--border); font-size:0.75rem; color:var(--dim);">
-                    <div><strong style="color:var(--accent);">Motivation:</strong> ${v.motivation}</div>
-                    <div style="margin-top:6px;"><strong style="color:var(--gold);">Weakness:</strong> ${v.weakness}</div>
-                </div>
-
-                <button class="btn-sm" style="width:100%; margin-top:12px; background:rgba(125,150,255,0.1); color:var(--accent); border-color:var(--accent);" onclick="openVillainModal(${v.id})">Update Villain Intel</button>
-            </div>`;
-        }).join('');
-    }
-
-    function adjVillainHp(id, d) {
-        const v = state.villains.find(x => x.id === id);
-        v.hp = Math.max(0, Math.min(v.maxHp, v.hp + d));
-        save(); renderVillains();
-    }
-
-    function openVillainModal(id) {
-        const isNew = id === 'new';
-        const v = isNew ? { name:"", title:"", maxHp:200, hp:200, phase:1, motivation:"", weakness:"" } : state.villains.find(x => x.id === id);
-        
-        document.getElementById('vModalContent').innerHTML = `
-            <div class="section-title">${isNew ? "Spawn New Antagonist" : "Edit Antagonist"}</div>
-            
-            <label class="input-label">Villain Name</label>
-            <input class="input" id="v-name" value="${v.name}" placeholder="e.g. The Unseen Warden">
-            
-            <label class="input-label">Epithet / Title</label>
-            <input class="input" id="v-title" value="${v.title}" placeholder="e.g. Lord of the Caverns">
-            
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-                <div><label class="input-label">Max HP</label><input type="number" class="input" id="v-mhp" value="${v.maxHp}"></div>
-                <div><label class="input-label">Current Phase</label><input type="number" class="input" id="v-phase" value="${v.phase}"></div>
-            </div>
-
-            <label class="input-label">Motivation & Goals</label>
-            <textarea class="input" id="v-mot" style="height:80px;">${v.motivation}</textarea>
-            
-            <label class="input-label">Known Weakness</label>
-            <input class="input" id="v-weak" value="${v.weakness}" placeholder="What stops them?">
-
-            <button class="btn" style="background:var(--red); color:#fff; border-color:var(--red); margin-top:10px;" onclick="saveVillain(${isNew ? null : id})">Commit Antagonist</button>
-            ${!isNew ? `<button class="btn-sm" style="width:100%; margin-top:10px; background:rgba(239,83,80,0.2); color:var(--red);" onclick="delVillain(${id})">Destroy Villain (Remove)</button>` : ''}
-            <button class="btn-sm" style="width:100%; margin-top:10px;" onclick="closeModals()">Cancel</button>
-        `;
-        document.getElementById('vModal').classList.add('open');
-    }
-
-    function saveVillain(id) {
-        const v = {
-            id: id || Date.now(),
-            name: document.getElementById('v-name').value,
-            title: document.getElementById('v-title').value,
-            maxHp: parseInt(document.getElementById('v-mhp').value),
-            hp: id ? state.villains.find(x=>x.id===id).hp : parseInt(document.getElementById('v-mhp').value), // Keep current HP if editing, otherwise full
-            phase: parseInt(document.getElementById('v-phase').value),
-            motivation: document.getElementById('v-mot').value,
-            weakness: document.getElementById('v-weak').value
-        };
-
-        if(id) { const idx = state.villains.findIndex(x => x.id === id); state.villains[idx] = v; }
-        else { state.villains.unshift(v); }
-        
-        save(); closeModals(); renderVillains();
-    }
-
-    function delVillain(id) {
-        if(confirm("Remove this villain from the tracker permanently?")) {
-            state.villains = state.villains.filter(x => x.id !== id);
-            save(); closeModals(); renderVillains();
-        }
-    }
-
-    // ════════════════════════════════════════════════════════════
-    // WORLD ARC BOARD
-    // ════════════════════════════════════════════════════════════
-    function renderWorld() {
-        document.getElementById('w-title').value = state.world.arcTitle || "";
-        document.getElementById('w-villain').value = state.world.arcVillain || "";
-        document.getElementById('w-thread').value = state.world.arcThread || "";
-        document.getElementById('w-events').value = state.world.events || "";
-    }
-
-    function saveWorld() {
-        state.world = {
-            arcTitle: document.getElementById('w-title').value,
-            arcVillain: document.getElementById('w-villain').value,
-            arcThread: document.getElementById('w-thread').value,
-            events: document.getElementById('w-events').value
-        };
-        save();
-        // Visual feedback
-        const btn = event.target;
-        if(btn.tagName === 'BUTTON') {
-            const original = btn.innerText;
-            btn.innerText = "✓ Saved";
-            btn.style.background = "var(--green)";
-            setTimeout(() => { btn.innerText = original; btn.style.background = "rgba(129, 140, 248, 0.2)"; }, 1500);
-        }
-    }
-
-    // ════════════════════════════════════════════════════════════
-    // HALL OF FAME
-    // ════════════════════════════════════════════════════════════
-    function renderHof() {
-        const list = document.getElementById('hofList');
-        if (!state.hof || state.hof.length === 0) {
-            list.innerHTML = `<div style="text-align:center; color:var(--dim); padding:40px;">No legends inducted yet.</div>`;
-            return;
-        }
-
-        list.innerHTML = state.hof.map(h => `
-            <div class="hof-card">
-                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-                    <div>
-                        <div style="font-weight:900; font-size:1.3rem; color:var(--gold);">🏆 ${h.name}</div>
-                        <div style="font-size:0.75rem; color:var(--text); font-style:italic;">${h.title}</div>
-                    </div>
-                    <div style="font-size:0.6rem; color:var(--dim);">${h.date}</div>
-                </div>
-                <div style="margin-top:12px; font-size:0.7rem; color:var(--accent); text-transform:uppercase; font-weight:bold;">${h.reason}</div>
-                <div style="margin-top:4px; font-size:0.8rem; color:var(--dim); line-height:1.6;">${h.notes}</div>
-                <button class="btn-sm" style="margin-top:12px; background:transparent; border:none; color:var(--red); text-decoration:underline; font-size:0.6rem; padding:0;" onclick="removeHof(${h.id})">Remove from Hall</button>
+    function renderLoreHardcoded() {
+        const type = document.getElementById('loreFilter').value;
+        const display = document.getElementById('loreDisplay');
+        display.innerHTML = SKILLS_LORE[type].map(item => `
+            <div style="background:rgba(0,0,0,0.2); padding:16px; border-radius:12px; border-left:3px solid var(--accent); margin-bottom:12px;">
+                <div style="font-size:0.95rem; font-weight:800; color:#fff; margin-bottom:6px;">${item.n}</div>
+                <div style="font-size:0.8rem; color:var(--dim); line-height:1.6;">${item.d}</div>
             </div>
         `).join('');
     }
 
-    function addHof() {
-        const name = document.getElementById('h-name').value;
-        const title = document.getElementById('h-title').value;
-        const reason = document.getElementById('h-reason').value;
-        const notes = document.getElementById('h-notes').value;
-
-        if(!name) return alert("You must provide a name to induct.");
-
-        state.hof.unshift({ id: Date.now(), name, title, reason, notes, date: new Date().toLocaleDateString() });
-        save();
-        
-        document.getElementById('h-name').value = ''; document.getElementById('h-title').value = ''; document.getElementById('h-notes').value = '';
-        renderHof();
+    function refreshNpcs() {
+        const s = document.getElementById('npcSearch').value.toLowerCase();
+        document.getElementById('npcListDisplay').innerHTML = state.npcs.filter(n => n.name.toLowerCase().includes(s)).map(n => `
+            <div class="card" style="border:1px solid var(--border); padding:16px; margin-bottom:14px;">
+                <div style="font-weight:900; font-size:1.1rem; color:#fff;">${n.name}</div>
+                <div style="font-size:0.7rem; color:var(--accent); text-transform:uppercase; margin-top:2px;">${n.fac} • ${n.disp}</div>
+                <div style="font-size:0.8rem; color:var(--text); margin-top:10px; line-height:1.6; font-style:italic;">${n.notes}</div>
+                <div style="margin-top:15px; border-top:1px dashed var(--border); padding-top:15px;">
+                    <div style="color:var(--gold); font-size:0.65rem; font-weight:800; margin-bottom:4px;">ACTIVE RUMORS</div>
+                    <div style="font-size:0.75rem; color:var(--dim); margin-bottom:8px;">${n.rumor || "No active rumors."}</div>
+                    <div style="color:var(--red); font-size:0.65rem; font-weight:800; margin-bottom:4px;">PLAYER BOUNTIES</div>
+                    <div style="font-size:0.75rem; color:var(--dim);">${n.bounty || "No specific player memory recorded."}</div>
+                </div>
+                <button class="btn-sm" style="width:100%; margin-top:12px; background:rgba(129,140,248,0.1); color:var(--accent); border-color:var(--accent);" onclick="openNpcEditor(${n.id})">Update NPC Intelligence</button>
+            </div>
+        `).join('');
     }
 
-    function removeHof(id) {
-        if(confirm("Revoke this induction?")) {
-            state.hof = state.hof.filter(x => x.id !== id);
-            save(); renderHof();
-        }
+    function openNpcEditor(id) {
+        const n = id === 'new' ? {name:"", fac:"", disp:"Neutral", notes:"", rumor:"", bounty:""} : state.npcs.find(x => x.id === id);
+        document.getElementById('npcModalContent').innerHTML = `
+            <div class="section-title" style="font-size:0.7rem; font-weight:800; color:var(--accent); margin-bottom:16px;">${id === 'new' ? "Register New Entity" : "Update Entity Memory"}</div>
+            <label style="display:block; font-size:0.7rem; color:var(--dim); margin-bottom:6px;">Entity Name</label><input class="input" style="width:100%; padding:14px; background:rgba(0,0,0,0.4); border:1px solid var(--border); border-radius:14px; color:#fff; margin-bottom:16px;" id="nn-name" value="${n.name}">
+            <label style="display:block; font-size:0.7rem; color:var(--dim); margin-bottom:6px;">Faction Alignment</label><input class="input" style="width:100%; padding:14px; background:rgba(0,0,0,0.4); border:1px solid var(--border); border-radius:14px; color:#fff; margin-bottom:16px;" id="nn-fac" value="${n.fac}">
+            <label style="display:block; font-size:0.7rem; color:var(--dim); margin-bottom:6px;">Current Disposition</label>
+            <select class="input" style="width:100%; padding:14px; background:rgba(0,0,0,0.4); border:1px solid var(--border); border-radius:14px; color:#fff; margin-bottom:16px;" id="nn-disp">
+                <option ${n.disp==='Allied'?'selected':''}>Allied</option><option ${n.disp==='Friendly'?'selected':''}>Friendly</option><option ${n.disp==='Neutral'?'selected':''}>Neutral</option><option ${n.disp==='Wary'?'selected':''}>Wary</option><option ${n.disp==='Hostile'?'selected':''}>Hostile</option>
+            </select>
+            <label style="display:block; font-size:0.7rem; color:var(--dim); margin-bottom:6px;">Background & Motives</label><textarea class="input" style="width:100%; padding:14px; background:rgba(0,0,0,0.4); border:1px solid var(--border); border-radius:14px; color:#fff; margin-bottom:16px; height:80px;" id="nn-notes">${n.notes}</textarea>
+            <label style="display:block; font-size:0.7rem; color:var(--dim); margin-bottom:6px;">Active Rumors</label><input class="input" style="width:100%; padding:14px; background:rgba(0,0,0,0.4); border:1px solid var(--border); border-radius:14px; color:#fff; margin-bottom:16px;" id="nn-rumor" value="${n.rumor}">
+            <label style="display:block; font-size:0.7rem; color:var(--dim); margin-bottom:6px;">Player Specific Memory</label><input class="input" style="width:100%; padding:14px; background:rgba(0,0,0,0.4); border:1px solid var(--border); border-radius:14px; color:#fff; margin-bottom:16px;" id="nn-bounty" value="${n.bounty}">
+            <button style="width:100%; padding:14px; border-radius:12px; border:1px solid var(--accent); background:rgba(129,140,248,0.2); color:var(--accent); font-weight:700; margin-bottom:10px;" onclick="saveNpc(${id === 'new' ? null : id})">Commit to NPC Ledger</button>
+            <button style="width:100%; padding:14px; border-radius:12px; border:1px solid var(--border); background:rgba(255,255,255,0.05); color:#fff; font-weight:700;" onclick="closeModals()">Discard Changes</button>
+        `;
+        document.getElementById('npcModal').classList.add('open');
     }
 
-    // ════════════════════════════════════════════════════════════
-    // UTILITIES
-    // ════════════════════════════════════════════════════════════
+    function saveNpc(id) {
+        const n = { id: id || Date.now(), name: document.getElementById('nn-name').value, fac: document.getElementById('nn-fac').value, disp: document.getElementById('nn-disp').value, notes: document.getElementById('nn-notes').value, rumor: document.getElementById('nn-rumor').value, bounty: document.getElementById('nn-bounty').value };
+        if(id) { const idx = state.npcs.findIndex(x => x.id === id); state.npcs[idx] = n; }
+        else state.npcs.unshift(n);
+        save(); closeModals(); refreshNpcs();
+    }
+
+    function renderFaq() {
+        document.getElementById('faqList').innerHTML = `
+        <div style="margin-bottom:20px; border-bottom:1px solid var(--border); padding-bottom:10px;">
+            <div style="font-weight:900; color:var(--text); margin-bottom:4px;">1. Can I play if I missed the start?</div>
+            <div style="font-size:0.8rem; color:var(--dim); line-height:1.6;">Yes. New characters can join at any time via the entry gift (1,000 coins). You’ll be introduced at the start of the next live session.</div>
+        </div>
+        <div style="margin-bottom:20px; border-bottom:1px solid var(--border); padding-bottom:10px;">
+            <div style="font-weight:900; color:var(--text); margin-bottom:4px;">2. What happens if I miss a live session?</div>
+            <div style="font-size:0.8rem; color:var(--dim); line-height:1.6;">Your character exists in the world. If you have Protection Mode banked, you're covered from death and Box Battle targeting.</div>
+        </div>
+        <div style="margin-bottom:20px; border-bottom:1px solid var(--border); padding-bottom:10px;">
+            <div style="font-weight:900; color:var(--text); margin-bottom:4px;">3. How does Protection Mode work?</div>
+            <div style="font-size:0.8rem; color:var(--dim); line-height:1.6;">It costs 1,000 coins per session missed. Does NOT cover curses or NPC events. Lore framing: Your character moves with a "ward".</div>
+        </div>
+        <div style="margin-bottom:20px;">
+            <div style="font-weight:900; color:var(--text); margin-bottom:4px;">4. Hall of Fame Requirements?</div>
+            <div style="font-size:0.8rem; color:var(--dim); line-height:1.6;">Inducted for: Nat 20 on world-changing action, story-defining death, Box Battle OP tier (45k+), or an Origin Story episode produced.</div>
+        </div>
+        `;
+    }
+
     function closeModals() { document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('open')); }
     function rollD20() { document.getElementById('rollVal').innerText = "FATE: " + (Math.floor(Math.random() * 20) + 1); }
+    function saveNotes() { state.notes = document.getElementById('sessNotes').value; save(); }
     function wipeDatabase() { if(confirm("WARNING: THIS ERASES EVERY PLAYER, VILLAIN, AND NOTE. PROCEED?")) { localStorage.clear(); location.reload(); } }
 
-    // Init
-    refreshParty(); renderWorld(); renderProtect(); renderVillains(); renderHof();
   </script>
 </body>
 </html>
+
